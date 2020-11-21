@@ -76,6 +76,12 @@ class MainWindow(Screen):
 class WindowManager(ScreenManager):
     pass
 
+class SearchWindow(Screen):
+    created = ObjectProperty(None)
+    email = ObjectProperty(None)
+
+class AboutWindow(Screen):
+    pass
 
 def invalidLogin():
     pop = Popup(title='Invalid Login',
@@ -97,7 +103,7 @@ kv = Builder.load_file("my.kv")
 sm = WindowManager()
 db = DataBase("users.txt")
 
-screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"),MainWindow(name="main")]
+screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"),MainWindow(name="main"),SearchWindow(name="SearchPage"),AboutWindow(name="AboutPage")]
 for screen in screens:
     sm.add_widget(screen)
 
