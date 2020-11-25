@@ -1,4 +1,4 @@
-final froject: Hen and Yiftah
+final froject: Chen and Yiftah
 
 To Do List:
 
