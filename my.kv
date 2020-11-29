@@ -1,7 +1,7 @@
 <CreateAccountWindow>:
     name: "create"
 
-    namee: namee
+    nameUser: nameUser
     email: email
     password: passw
 
@@ -26,7 +26,7 @@
             TextInput:
                 pos_hint: {"x":0.5, "top":0.8}
                 size_hint: 0.4, 0.12
-                id: namee
+                id: nameUser
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
@@ -232,9 +232,9 @@
         Button:
             pos_hint:{"x":0.2, "y": 0.4}
             size_hint:0.6,0.1
-            text: "Publish"
+            text: "Publish New Item"
             on_release:
-                app.root.current = "PublishPage"
+                app.root.current = "publish"
                 root.manager.transition.direction = "down"
         Button:
             pos_hint:{"x":0.2, "y": 0.3}
@@ -266,3 +266,142 @@
             on_release:
                 app.root.current = "AboutPage"
                 root.manager.transition.direction = "down"
+
+<PublishWindow>:
+    name: "publish"
+
+    itemName: itemName
+
+    FloatLayout:
+        cols:5
+        size: root.width, root.height/2
+
+        Label:
+            text: "Publish New Item"
+            size_hint: 0.8, 0.2
+            pos_hint: {"x":0.05, "top":1.05}
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+        Label:
+            size_hint: 0.5,0.12
+            pos_hint: {"x":-0.1, "top":0.95}
+            text: "Item's Name: "
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+        TextInput:
+            pos_hint: {"x":0.05, "top":0.85}
+            size_hint: 0.9, 0.12
+            id: itemName
+            multiline: False
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+        Label:
+            size_hint: 0.5,0.12
+            pos_hint: {"x":-0.13, "top":0.7}
+            text: "Amount: "
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+            # Create Toogle button 1
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.05 * root.width, 0.450 * root.height
+                text: '1'
+                group: 'geometry'
+
+       # Create Toogle button 2
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.235 * root.width, 0.450 * root.height
+                text: '2'
+                group: 'geometry'
+
+        # Create Toogle button 3
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.42 * root.width, 0.450 * root.height
+                text: '3'
+                group: 'geometry'
+
+        # Create Toogle button 4
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.606 * root.width, 0.450 * root.height
+                text: '4'
+                group: 'geometry'
+
+
+        # Create Toogle button 5
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.8 * root.width, 0.450 * root.height
+                text: '5+'
+                group: 'geometry'
+
+        Label:
+            size_hint: 0.5,0.12
+            pos_hint: {"x":-0.13, "top":0.45}
+            text: "Location: "
+            font_size: (root.width**2 + root.height**2) / 14**4
+
+            # Create Toogle button 1
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.05 * root.width, 0.150 * root.height
+                text: 'University'
+                group: 'geometry'
+
+       # Create Toogle button 2
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.235 * root.width, 0.150 * root.height
+                text: 'Big Center'
+                group: 'geometry'
+
+        # Create Toogle button 3
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.42 * root.width, 0.150 * root.height
+                text: 'Grand Mall'
+                group: 'geometry'
+
+        # Create Toogle button 4
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.606 * root.width, 0.150 * root.height
+                text: 'Old City'
+                group: 'geometry'
+
+
+        # Create Toogle button 5
+        RelativeLayout:
+            ToggleButton:
+                size_hint: None, None
+                size: 0.15 * root.width, 0.15 * root.height
+                pos: 0.8 * root.width, 0.150 * root.height
+                text: 'Oren Center'
+                group: 'geometry'
+
+
+        Button:
+            pos_hint:{"x":0.3,"y":0.00}
+            size_hint: 0.4, 0.1
+            text: "Publish"
+            font_size: (root.width**2 + root.height**2) / 14**4

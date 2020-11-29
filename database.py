@@ -49,3 +49,30 @@ class DataBase:
         return str(datetime.datetime.now()).split(" ")[0]
 
 
+class DataBaseItems:
+
+    def __init__(self, filename):
+        self.filename = filename
+        self.users = None
+        self.file = None
+        self.load()
+
+    def load(self):
+        self.file = open(self.filename, "r")
+        self.users = {}
+        for line in self.file:
+            email, item_name, amount, location, taken = line.strip().split(";")
+            self.users[email] = (item_name, amount, location, taken)
+
+        self.file.close()
+
+    def add_item_to_user(self, email, item_name, amount, location):
+        self.users[email.strip()] = (item_name.strip(), amount.strip(), location.strip(), "False")
+        self.save()
+
+    def save(self):
+        with open(self.filename, "w") as f:
+            for user in self.users:
+                f.write(user + ";" + self.users[user][0] + ";" + self.users[user][1] + ";" + self.users[user][2]
+                        + ";" + self.users[user][3] + ";" + self.users[user][4]
+                        + "\n")

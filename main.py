@@ -5,17 +5,24 @@ from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from database import DataBase
+from kivy.uix.dropdown import DropDown
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.gridlayout import GridLayout
+
 
 
 class CreateAccountWindow(Screen):
-    namee = ObjectProperty(None)
+    nameUser = ObjectProperty(None)
     email = ObjectProperty(None)
     password = ObjectProperty(None)
 
     def submit(self):
-        if self.namee.text != "" and self.email.text != "" and self.email.text.count("@") == 1 and self.email.text.count(".") > 0:
+        if self.nameUser.text != "" and self.email.text != "" and self.email.text.count(
+                "@") == 1 and self.email.text.count(".") > 0 \
+                and (all(x.isalpha() or x.isspace() for x in self.nameUser.text)):
             if self.password != "":
-                db.add_user(self.email.text, self.password.text, self.namee.text)
+                db.add_user(self.email.text, self.password.text, self.nameUser.text)
 
                 self.reset()
 
@@ -25,7 +32,6 @@ class CreateAccountWindow(Screen):
         else:
             invalidForm()
 
-
     def login(self):
         self.reset()
         sm.current = "login"
@@ -33,7 +39,7 @@ class CreateAccountWindow(Screen):
     def reset(self):
         self.email.text = ""
         self.password.text = ""
-        self.namee.text = ""
+        self.nameUser.text = ""
 
 
 class LoginWindow(Screen):
@@ -76,24 +82,36 @@ class MainWindow(Screen):
 class WindowManager(ScreenManager):
     pass
 
+
+class PublishWindow(Screen):
+    email = ObjectProperty(None)
+    itemName = ObjectProperty(None)
+    amount = ObjectProperty(None)
+    location = ObjectProperty(None)
+
+
+
+
 class SearchWindow(Screen):
     created = ObjectProperty(None)
     email = ObjectProperty(None)
 
+
 class AboutWindow(Screen):
     pass
 
+
 def invalidLogin():
     pop = Popup(title='Invalid Login',
-                  content=Label(text='Invalid username or password.'),
-                  size_hint=(None, None), size=(400, 400))
+                content=Label(text='Invalid username or password.'),
+                size_hint=(None, None), size=(400, 400))
     pop.open()
 
 
 def invalidForm():
     pop = Popup(title='Invalid Form',
-                  content=Label(text='Please fill in all inputs with valid information.'),
-                  size_hint=(None, None), size=(400, 400))
+                content=Label(text='Please fill in all inputs with valid information.'),
+                size_hint=(None, None), size=(400, 400))
 
     pop.open()
 
@@ -103,7 +121,9 @@ kv = Builder.load_file("my.kv")
 sm = WindowManager()
 db = DataBase("users.txt")
 
-screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"),MainWindow(name="main"),SearchWindow(name="SearchPage"),AboutWindow(name="AboutPage")]
+screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
+           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish")]
+
 for screen in screens:
     sm.add_widget(screen)
 
