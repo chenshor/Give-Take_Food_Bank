@@ -1,14 +1,17 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from database import DataBase
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
+from kivy.properties import ObjectProperty
 
 
 
@@ -93,8 +96,42 @@ class PublishWindow(Screen):
 
 
 class SearchWindow(Screen):
-    created = ObjectProperty(None)
     email = ObjectProperty(None)
+    category = ObjectProperty(None)
+    location = ObjectProperty(None)
+
+    button_text = StringProperty('Show possibilities')
+    button_text2 = StringProperty('Show possibilities')
+
+    def __init__(self, **kwargs):
+        super(SearchWindow, self).__init__(**kwargs)
+        self.dropdown = CustomDropDown1(self)
+        self.dropdown2 = CustomDropDown2(self)
+
+    def open_drop_down(self, widget):
+        self.dropdown.open(widget)
+
+    def open_drop_down2(self, widget):
+        self.dropdown2.open(widget)
+
+class CustomDropDown1(DropDown):
+    def __init__(self, screen_manager, **kwargs):
+        super(CustomDropDown1, self).__init__(**kwargs)
+        self.sm = screen_manager
+        self.is2Displayed = False
+
+    def on_select(self, data):
+        self.sm.button_text = data
+
+class CustomDropDown2(DropDown):
+    def __init__(self, screen_manager, **kwargs):
+        super(CustomDropDown2, self).__init__(**kwargs)
+        self.sm = screen_manager
+        self.is2Displayed = False
+
+    def on_select(self, data):
+        self.sm.button_text2 = data
+
 
 
 class AboutWindow(Screen):
