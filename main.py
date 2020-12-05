@@ -65,7 +65,7 @@ class LoginWindow(Screen):
         self.name1.text = ""
         self.password.text = ""
 
-
+""" This class represents the main page of our app where users can publish and search for items"""
 class MainWindow(Screen):
     name1 = ObjectProperty(None)
     email = ObjectProperty(None)
@@ -84,14 +84,36 @@ class WindowManager(ScreenManager):
     pass
 
 
+""" This Class represents the publish page where users can publish new items"""
 class PublishWindow(Screen):
     email = ObjectProperty(None)
     itemName = ObjectProperty(None)
     amount = ObjectProperty(None)
     location = ObjectProperty(None)
+    category = ObjectProperty(None)
+
+    button_text = StringProperty('Show possibilities')
+    button_text2 = StringProperty('Show possibilities')
+    button_text3 = StringProperty('Show possibilities')
+
+    def __init__(self, **kwargs):
+        super(PublishWindow, self).__init__(**kwargs)
+        self.dropdown = CustomDropDown1(self)
+        self.dropdown2 = CustomDropDown2(self)
+        self.dropdown3 = CustomDropDown3(self)
+
+    def open_drop_down(self, widget):
+        self.dropdown.open(widget)
+
+    def open_drop_down3(self, widget):
+        self.dropdown3.open(widget)
+
+class MyPostsWindow(Screen):
+    pass
 
 
-
+    def open_drop_down2(self, widget):
+        self.dropdown2.open(widget)
 
 class SearchWindow(Screen):
     email = ObjectProperty(None)
@@ -130,6 +152,14 @@ class CustomDropDown2(DropDown):
     def on_select(self, data):
         self.sm.button_text2 = data
 
+class CustomDropDown3(DropDown):
+    def __init__(self, screen_manager, **kwargs):
+        super(CustomDropDown3, self).__init__(**kwargs)
+        self.sm = screen_manager
+        self.is2Displayed = False
+
+    def on_select(self, data):
+        self.sm.button_text3 = data
 
 
 class AboutWindow(Screen):
@@ -157,7 +187,8 @@ sm = WindowManager()
 # db = DataBase("users.txt")
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
-           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish")]
+           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish"),
+           MyPostsWindow(name="MyPosts")]
 
 for screen in screens:
     sm.add_widget(screen)
