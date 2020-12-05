@@ -1,8 +1,9 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty, ListProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.checkbox import CheckBox
@@ -12,6 +13,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty
 import database
+
 
 
 
@@ -31,9 +33,9 @@ class CreateAccountWindow(Screen):
 
                 sm.current = "login"
             else:
-                invalidForm()
+                pop_results('Invalid Form','Please fill in all inputs with valid information.')
         else:
-            invalidForm()
+            pop_results('Invalid Form','Please fill in all inputs with valid information.')
 
     def login(self):
         self.reset()
@@ -55,7 +57,7 @@ class LoginWindow(Screen):
             self.reset()
             sm.current = "main"
         else:
-            invalidLogin()
+            pop_results('Invalid Login','Invalid username or password.')
 
     def createBtn(self):
         self.reset()
@@ -116,12 +118,12 @@ class MyPostsWindow(Screen):
         self.dropdown2.open(widget)
 
 class SearchWindow(Screen):
-    email = ObjectProperty(None)
     category = ObjectProperty(None)
     location = ObjectProperty(None)
-
+    result = ObjectProperty(None)
     button_text = StringProperty('Show possibilities')
     button_text2 = StringProperty('Show possibilities')
+    button_text3 = StringProperty('Show possibilities')
 
     def __init__(self, **kwargs):
         super(SearchWindow, self).__init__(**kwargs)
@@ -133,6 +135,22 @@ class SearchWindow(Screen):
 
     def open_drop_down2(self, widget):
         self.dropdown2.open(widget)
+
+    def Search(self):
+        text = ""
+        if self.category.text == "Show possibilities" or self.location.text == "Show possibilities":
+            pop_results('Invalid Search', 'Please choose from the options')
+        else:
+            list = database.search(self.category.text, self.location.text)
+            if list == "no results":
+                self.result.text = list
+            else:
+                for line in list:
+                    text = text + line[0] + " " + line[1] + " " + str(line[2]) + " " + line[3] + " " + line[4] + " " + \
+                           line[5] + "\n"
+                self.result.text = text
+
+
 
 class CustomDropDown1(DropDown):
     def __init__(self, screen_manager, **kwargs):
@@ -165,20 +183,22 @@ class CustomDropDown3(DropDown):
 class AboutWindow(Screen):
     pass
 
+class DataWindow(Screen):
+    pass
 
-def invalidLogin():
-    pop = Popup(title='Invalid Login',
-                content=Label(text='Invalid username or password.'),
+
+def pop_results(title, results):
+    layout = GridLayout(cols=1, padding=10)
+    popupLabel = Label(text=results)
+    layout.add_widget(popupLabel)
+    closeButton = Button(text="Close the pop-up")
+    layout.add_widget(closeButton)
+    pop = Popup(title=title,
+                content=layout,
                 size_hint=(None, None), size=(400, 400))
-    pop.open()
-
-
-def invalidForm():
-    pop = Popup(title='Invalid Form',
-                content=Label(text='Please fill in all inputs with valid information.'),
-                size_hint=(None, None), size=(400, 400))
 
     pop.open()
+    closeButton.bind(on_press=pop.dismiss)
 
 
 kv = Builder.load_file("my.kv")
@@ -187,7 +207,7 @@ sm = WindowManager()
 # db = DataBase("users.txt")
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
-           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish"),
+           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"), PublishWindow(name="publish"),
            MyPostsWindow(name="MyPosts")]
 
 for screen in screens:

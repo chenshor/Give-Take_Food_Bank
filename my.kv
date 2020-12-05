@@ -77,6 +77,23 @@
                 root.manager.transition.direction = "left"
                 root.submit()
 
+<DataWindow>:
+    FloatLayout:
+
+        Label:
+            text:"Data Page"
+            font_size: (root.width**2 + root.height**2) / 13**4
+            pos_hint: {"x":0.1, "top":0.9}
+            size_hint: 0.35, 0.15
+
+        Button:
+            pos_hint:{"x":0.4, "y": 0.0}
+            size_hint:0.2,0.1
+            text: "Back"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "up"
+
 <AboutWindow>:
     FloatLayout:
 
@@ -104,65 +121,78 @@
     name: "search"
     category: category
     location: location
-
+    result: result
 
     FloatLayout:
+        cols:5
+        size: root.width, root.height/2
+
+
+        Label:
+            text: "Search Items"
+            size_hint: 0.8, 0.2
+            pos_hint: {"x":0.05, "top":1.05}
+            font_size: (root.width**2 + root.height**2) / 14**4
 
         Label:
             text:"Category: "
-            font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.9}
-            size_hint: 0.35, 0.15
+            font_size: (root.width**2 + root.height**2) / 14**4
+            pos_hint: {"x":-0.125, "top":0.80}
+            size_hint: 0.5,0.12
 
         Button:
             id: category
             text: root.button_text
             size: (200, 50)
-            size_hint: 0.4, 0.15
-            pos_hint: {"x": 0.45 , "top":0.9}
+            size_hint: 0.5, 0.06
+            pos_hint: {"x": 0.3 , "top":0.76}
             on_release: root.open_drop_down(self)
 
         Label:
             text:"Location: "
-            font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.7}
-            size_hint: 0.35, 0.15
-            background_color: 0, 0, 0, 0.5
+            font_size: (root.width**2 + root.height**2) / 14**4
+            pos_hint: {"x":-0.13, "top":0.7}
+            size_hint: 0.5,0.12
 
         TextInput:
             id: location
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             password: True
-            pos_hint: {"x": 0.45, "top":0.7}
-            size_hint: 0.4, 0.15
+            pos_hint: {"x": 0.3, "top":0.66}
+            size_hint: 0.5, 0.06
 
         Button:
             id: location
             text: root.button_text2
             size: (200, 50)
-            size_hint: 0.4, 0.15
-            pos_hint: {"x": 0.45, "top":0.7}
+            size_hint: 0.5, 0.06
+            pos_hint: {"x": 0.3, "top":0.66}
             on_release: root.open_drop_down2(self)
+
+        Label:
+            id: result
+            text:""
+            font_size: (root.width**2 + root.height**2) / 14**4
+            pos_hint: {"x":0.3, "top":0.50}
+            size_hint: 0.5,0.12
 
         Button:
             pos_hint:{"x":0.2,"y":0.1}
-            size_hint: 0.6, 0.2
-            font_size: (root.width**2 + root.height**2) / 13**4
+            size_hint: 0.2,0.1
             text: "Search"
             on_release:
                 root.manager.transition.direction = "up"
                 root.Search()
 
         Button:
-            pos_hint:{"x":0.4, "y": 0.0}
+            pos_hint:{"x":0.6, "y": 0.1}
             size_hint:0.2,0.1
             text: "Back"
 
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
-
 
 <CustomDropDown1>:
     padding: [0,0,0,0]
