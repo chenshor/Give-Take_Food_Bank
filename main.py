@@ -5,13 +5,13 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
-from database import DataBase
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.dropdown import DropDown
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty
+import database
 
 
 
@@ -25,7 +25,7 @@ class CreateAccountWindow(Screen):
                 "@") == 1 and self.email.text.count(".") > 0 \
                 and (all(x.isalpha() or x.isspace() for x in self.nameUser.text)):
             if self.password != "":
-                db.add_user(self.email.text, self.password.text, self.nameUser.text)
+                database.add_user(self.email.text, self.password.text, self.nameUser.text)
 
                 self.reset()
 
@@ -46,12 +46,12 @@ class CreateAccountWindow(Screen):
 
 
 class LoginWindow(Screen):
-    email = ObjectProperty(None)
+    name1 = ObjectProperty(None)
     password = ObjectProperty(None)
 
     def loginBtn(self):
-        if db.validate(self.email.text, self.password.text):
-            MainWindow.current = self.email.text
+        if database.validate(self.name1.text, self.password.text):
+            MainWindow.current = self.name1.text
             self.reset()
             sm.current = "main"
         else:
@@ -62,13 +62,12 @@ class LoginWindow(Screen):
         sm.current = "create"
 
     def reset(self):
-        self.email.text = ""
+        self.name1.text = ""
         self.password.text = ""
 
 
 class MainWindow(Screen):
-    n = ObjectProperty(None)
-    created = ObjectProperty(None)
+    name1 = ObjectProperty(None)
     email = ObjectProperty(None)
     current = ""
 
@@ -76,10 +75,9 @@ class MainWindow(Screen):
         sm.current = "login"
 
     def on_enter(self, *args):
-        password, name, created = db.get_user(self.current)
-        self.n.text = "Account Name: " + name
-        self.email.text = "Email: " + self.current
-        self.created.text = "Created On: " + created
+        name,password, email = database.get_user(self.current)
+        self.name1.text = "Account Name: " + name
+        self.email.text = "Email: " + email
 
 
 class WindowManager(ScreenManager):
@@ -156,7 +154,7 @@ def invalidForm():
 kv = Builder.load_file("my.kv")
 
 sm = WindowManager()
-db = DataBase("users.txt")
+# db = DataBase("users.txt")
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
            SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish")]
@@ -173,4 +171,5 @@ class MyMainApp(App):
 
 
 if __name__ == "__main__":
+    database=database.DataBase()
     MyMainApp().run()

@@ -3,7 +3,7 @@
 
     nameUser: nameUser
     email: email
-    password: passw
+    password: password
 
 
 
@@ -54,7 +54,7 @@
             TextInput:
                 pos_hint: {"x":0.5, "top":0.8-0.13*2}
                 size_hint: 0.4, 0.12
-                id: passw
+                id: password
                 multiline: False
                 password: True
                 font_size: (root.width**2 + root.height**2) / 14**4
@@ -238,19 +238,19 @@
 <LoginWindow>:
     name: "login"
 
-    email: email
+    name1: name1
     password: password
 
     FloatLayout:
 
         Label:
-            text:"Email: "
+            text:"name: "
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.1, "top":0.9}
             size_hint: 0.35, 0.15
 
         TextInput:
-            id: email
+            id: name1
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             pos_hint: {"x": 0.45 , "top":0.9}
@@ -290,13 +290,12 @@
 
 
 <MainWindow>:
-    n: n
+    name1: name1
     email: email
-    created:created
 
     FloatLayout:
         Label:
-            id: n
+            id: name1
             pos_hint:{"x": 0.1, "top":0.9}
             size_hint:0.8, 0.2
             text: "Account Name: "
@@ -307,11 +306,6 @@
             size_hint:0.8, 0.2
             text: "Email: "
 
-        Label:
-            id: created
-            pos_hint:{"x": 0.1, "top":0.7}
-            size_hint:0.8, 0.2
-            text: "Created: "
         Button:
             pos_hint:{"x":0.2, "y": 0.5}
             size_hint:0.6,0.1
