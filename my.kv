@@ -5,6 +5,8 @@
     email: email
     password: passw
 
+
+
     FloatLayout:
         cols:1
 
@@ -92,35 +94,43 @@
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 
+<CustomDropDown>:
+    id: dropdown
+    on_select:
+        app.root.ids.btn.text = '{}'.format(args[1])
+
 <SearchWindow>:
 
     name: "search"
-    email: email
-    password: password
+    category: category
+    location: location
+
 
     FloatLayout:
 
         Label:
-            text:"Category(need to change): "
+            text:"Category: "
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.1, "top":0.9}
             size_hint: 0.35, 0.15
 
-        TextInput:
-            id: email
-            font_size: (root.width**2 + root.height**2) / 13**4
-            multiline: False
-            pos_hint: {"x": 0.45 , "top":0.9}
+        Button:
+            id: category
+            text: root.button_text
+            size: (200, 50)
             size_hint: 0.4, 0.15
+            pos_hint: {"x": 0.45 , "top":0.9}
+            on_release: root.open_drop_down(self)
 
         Label:
             text:"Location: "
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.1, "top":0.7}
             size_hint: 0.35, 0.15
+            background_color: 0, 0, 0, 0.5
 
         TextInput:
-            id: password
+            id: location
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             password: True
@@ -128,7 +138,15 @@
             size_hint: 0.4, 0.15
 
         Button:
-            pos_hint:{"x":0.2,"y":0.05}
+            id: location
+            text: root.button_text2
+            size: (200, 50)
+            size_hint: 0.4, 0.15
+            pos_hint: {"x": 0.45, "top":0.7}
+            on_release: root.open_drop_down2(self)
+
+        Button:
+            pos_hint:{"x":0.2,"y":0.1}
             size_hint: 0.6, 0.2
             font_size: (root.width**2 + root.height**2) / 13**4
             text: "Search"
@@ -140,9 +158,82 @@
             pos_hint:{"x":0.4, "y": 0.0}
             size_hint:0.2,0.1
             text: "Back"
+
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
+
+
+<CustomDropDown1>:
+    padding: [0,0,0,0]
+    Button:
+        text:"Item 1"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Item 2"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Item 3"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+
+<CustomDropDown2>:
+    padding: [0,0,0,0]
+    Button:
+        text:"University"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Big Center"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Grand Mall"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+
+    Button:
+        text:"Old City"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Oren Center"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
 
 <LoginWindow>:
     name: "login"
@@ -405,3 +496,5 @@
             size_hint: 0.4, 0.1
             text: "Publish"
             font_size: (root.width**2 + root.height**2) / 14**4
+
+
