@@ -399,7 +399,7 @@
             size_hint:0.6,0.1
             text: "My Posts"
             on_release:
-                app.root.current = "pWindow"
+                app.root.current = "MyPostsWindow"
                 root.manager.transition.direction = "down"
 
         Button:
@@ -536,7 +536,6 @@
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 <MyPostsWindow>:
-    name: "pWindow"
     btnRemove: btnRemove
 
     FloatLayout:

@@ -218,8 +218,8 @@ class SearchWindow(Screen):
                 self.result.text = list
             else:
                 for line in list:
-                    text = text + line[0] + " " + line[1] + " " + str(line[2]) + " " + line[3] + " " + line[4] + " " + \
-                           line[5] + "\n"
+                    text = text + str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + " " + str(line[3]) + " " \
+                           + str(line[4]) + " " +  str(line[5]) + "\n"
                 self.result.text = text
 
 
@@ -299,7 +299,7 @@ sm = WindowManager()
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
            SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"), PublishWindow(name="publish"),
-           MyPostsWindow(name="MyPosts")]
+           MyPostsWindow(name="MyPostsWindow")]
 
 
 for screen in screens:
