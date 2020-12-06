@@ -28,11 +28,11 @@ class DataBase:
         if check_if_exists.fetchone()[0] != 1:
             self.cur.execute("CREATE TABLE IF NOT EXISTS dataTable ("
                              " ItemName MESSAGE_TEXT,"
-                             " PublishDate DATE ,"
                              " Amount INTEGER,"
                              " Category MESSAGE_TEXT,"
-                             " Locaion MESSAGE_TEXT,"
-                             " UserName MESSAGE_TEXT)")
+                             " Location MESSAGE_TEXT,"
+                             " UserName MESSAGE_TEXT,"
+                             "Taken MESSAGE_TEXT)")
 
         self.conn.commit()
         self.conn.close()  # closes the connection
@@ -81,26 +81,45 @@ class DataBase:
         self.user=result
         return True;
 
-class DataBaseItems:
 
-    def __init__(self, filename):
-        self.filename = filename
-        self.users = None
-        self.file = None
-        self.load()
+    """ This function adds a new item to the dataTable"""
+    """ Returns true if the insertion succeed, otherwise false"""
+    def add_item_to_user(self, name, item_name, amount, location,category):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("INSERT INTO dataTable (ItemName,Amount,Category,Location,UserName,Taken) VALUES (?, ?, ?,?,?,?);",
+                         (item_name,amount,category,location,name,"FALSE"))
+        self.conn.commit()
+        self.cur.execute("SELECT * FROM dataTable WHERE UserName=? AND ItemName=?", (name, item_name))
+        result = self.cur.fetchall()
+        self.conn.close()
+        if len(result) == 0:
+            return False
+        return True
 
-    def load(self):
-        self.file = open(self.filename, "r")
-        self.users = {}
-        for line in self.file:
-            email, item_name, amount, location, taken = line.strip().split(";")
-            self.users[email] = (item_name, amount, location, taken)
+    def update_taken (self, name, item_name,taken):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("UPDATE dataTable SET Taken =? WHERE UserName=? AND ItemName=? "
+                         "VALUES (?, ?, ?);",
+                         (taken,name,item_name))
+        self.conn.commit()
+        self.cur.execute("SELECT Taken FROM dataTable WHERE UserName=? AND ItemName=?", (name, item_name))
+        result = self.cur.fetchall()
+        self.conn.close()
+        if (result[0]==taken):
+            return  True
+        else:
+            return False
 
-        self.file.close()
 
-    def add_item_to_user(self, email, item_name, amount, location):
-        self.users[email.strip()] = (item_name.strip(), amount.strip(), location.strip(), "False")
-        self.save()
+    def get_posts_by_user(self, userName):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("SELECT * FROM dataTable WHERE UserName=?", (userName))
+        self.conn.commit()
+        posts = self.cur.fetchall()
+        return posts
 
     def save(self):
         with open(self.filename, "w") as f:
