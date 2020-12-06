@@ -127,3 +127,13 @@ class DataBase:
                 f.write(user + ";" + self.users[user][0] + ";" + self.users[user][1] + ";" + self.users[user][2]
                         + ";" + self.users[user][3] + ";" + self.users[user][4]
                         + "\n")
+
+def search(self, category, location):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("SELECT * FROM dataTable WHERE Category=? AND Locaion=?", (category, location))
+        result = self.cur.fetchall()
+
+        if len(result) == 0:
+            return "no results";
+        return result;

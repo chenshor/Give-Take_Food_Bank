@@ -1,7 +1,9 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.properties import ObjectProperty, StringProperty, ListProperty
 from kivy.properties import ObjectProperty, StringProperty, partial
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
@@ -13,6 +15,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty
 import database
 import re
+
 
 
 class CreateAccountWindow(Screen):
@@ -31,9 +34,9 @@ class CreateAccountWindow(Screen):
 
                 sm.current = "login"
             else:
-                invalidForm()
+                pop_results('Invalid Form','Please fill in all inputs with valid information.')
         else:
-            invalidForm()
+            pop_results('Invalid Form','Please fill in all inputs with valid information.')
 
     def login(self):
         self.reset()
@@ -55,7 +58,7 @@ class LoginWindow(Screen):
             self.reset()
             sm.current = "main"
         else:
-            invalidLogin()
+            pop_results('Invalid Login','Invalid username or password.')
 
     def createBtn(self):
         self.reset()
@@ -186,12 +189,12 @@ class MyPostsWindow(Screen):
 
 
 class SearchWindow(Screen):
-    email = ObjectProperty(None)
     category = ObjectProperty(None)
     location = ObjectProperty(None)
-
+    result = ObjectProperty(None)
     button_text = StringProperty('Show possibilities')
     button_text2 = StringProperty('Show possibilities')
+    button_text3 = StringProperty('Show possibilities')
 
     def __init__(self, **kwargs):
         super(SearchWindow, self).__init__(**kwargs)
@@ -203,6 +206,22 @@ class SearchWindow(Screen):
 
     def open_drop_down2(self, widget):
         self.dropdown2.open(widget)
+
+
+    def Search(self):
+        text = ""
+        if self.category.text == "Show possibilities" or self.location.text == "Show possibilities":
+            pop_results('Invalid Search', 'Please choose from the options')
+        else:
+            list = database.search(self.category.text, self.location.text)
+            if list == "no results":
+                self.result.text = list
+            else:
+                for line in list:
+                    text = text + line[0] + " " + line[1] + " " + str(line[2]) + " " + line[3] + " " + line[4] + " " + \
+                           line[5] + "\n"
+                self.result.text = text
+
 
 
 class CustomDropDown1(DropDown):
@@ -238,11 +257,14 @@ class CustomDropDown3(DropDown):
 class AboutWindow(Screen):
     pass
 
+class DataWindow(Screen):
+    pass
 
 def invalidLogin():
     pop = Popup(title='Invalid Login',
                 content=Label(text='Invalid username or password.'),
                 size_hint=(None, None), size=(400, 400))
+
     pop.open()
     """ This function shows popups according to a message"""
 
@@ -269,14 +291,16 @@ def invalidForm():
     pop.open()
 
 
+
 kv = Builder.load_file("my.kv")
 
 sm = WindowManager()
 # db = DataBase("users.txt")
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
-           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), PublishWindow(name="publish"),
-           MyPostsWindow(name="pWindow")]
+           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"), PublishWindow(name="publish"),
+           MyPostsWindow(name="MyPosts")]
+
 
 for screen in screens:
     sm.add_widget(screen)
