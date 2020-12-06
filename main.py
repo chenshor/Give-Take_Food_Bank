@@ -89,7 +89,8 @@ class MainWindow(Screen):
 
 
 class WindowManager(ScreenManager):
-    pass
+    def update_args(self,item):
+        self.item=item
 
 
 """ This Class represents the publish page where users can publish new items"""
@@ -154,39 +155,85 @@ class PublishWindow(Screen):
 
 class MyPostsWindow(Screen):
     btnRemove = ObjectProperty(None)
+    currentItem = ObjectProperty(None)
 
-
-    def show_my_posts(self):
+    def on_enter(self, *args):
         posts = database.get_posts_by_user(MainWindow.current)
         if len(posts) == 0:
             pop_results("Message:", "You haven't posted anything yet")
         else:
-            index_x=0.5
-            index_y=0.5
+            index_x=0.1
+            index_y=0.7
             for i in posts:
                 item =re.sub("[('),]", '', str(i[0]))
-                t_or_f = re.sub("[('),]", '', str(i[1]))
-                taken=""
+                details = "amount: " + re.sub("[('),]", '', str(i[1])) + ", location: " + re.sub("[('),]", '', str(i[3])) +", "
+                t_or_f = re.sub("[('),]", '', str(i[5]))
                 if(t_or_f=="TRUE"):
-                    taken="Taken"
+                    details= details +"Taken"
                 else:
-                    taken="Available"
-                label = Label(text=item,size_hint=(0.2,0.1),
-                                pos_hint=({"x":index_x-0.2, "y": index_y}) )
+                    details= details+ "Available"
+                self.button = Button(text=item, on_press=self.choose_item,size_hint=(0.2,0.1),
+                                pos_hint=({"x":index_x, "y": index_y}))
+                self.add_widget(self.button)
+                label = Label(text=details,size_hint=(0.2,0.1),
+                                pos_hint=({"x":index_x+0.05, "y": index_y-0.1}) )
                 self.add_widget(label)
-                index_y-=0.1
+                index_y-=0.2
 
 
-    def take_item(self,instance):
-        if instance.text=="Available":
-            instance.text="Taken"
-            database.update_taken(MainWindow.current, self.text1, "TRUE")
-        else:
-            instance.text="Available"
+    def choose_item(self,instance):
+        self.parent.update_args(instance)
+        self.parent.current="updateItemWindow"
+        print(instance.text)
 
     def back_main(self):
         self.parent.current = "main"
 
+class updateItemWindow(Screen):
+    amount = ObjectProperty(None)
+    location = ObjectProperty(None)
+    item = ObjectProperty(None)
+    nameI= ObjectProperty(None)
+
+    button_text3 = StringProperty('Show possibilities')
+    button_text2 = StringProperty('Show possibilities')
+
+    """ Inits the dropDowns"""
+
+    def __init__(self, **kwargs):
+        super(updateItemWindow, self).__init__(**kwargs)
+        self.dropdown2 = CustomDropDown2(self)
+        self.dropdown3 = CustomDropDown3(self)
+        # self.item = self.parent.item.text
+        # print(self.parent.item.text)
+        # self.nameI.text = self.nameI + self.item
+
+    def on_enter(self, *args):
+        self.item = self.parent.item.text
+        self.nameI.text = "Item's Name: " + self.item
+
+    def open_drop_down2(self, widget):
+        self.dropdown2.open(widget)
+
+
+    def open_drop_down3(self, widget):
+        self.dropdown3.open(widget)
+
+    def updateItem(self):
+        if (
+                self.amount.text != "Show possibilities" and self.location.text != "Show possibilities"
+                and self.item!= "" and MainWindow.current != ""):
+            ok = database.update(MainWindow.current, self.item, self.amount.text, self.location.text)
+            if ok:  # the item was added to the db successfully
+                pop_results("Message:", "The item updated successfully")
+                self.parent.current = "main"
+            else:
+                pop_results("Message: ", "OOPS! Please try again later.")
+                self.parent.current = "main"
+        else:
+            pop_results("Message:", "Please fill in all the boxes")
+            self.amount.text=""
+            self.location.text=""
 
 class SearchWindow(Screen):
     category = ObjectProperty(None)
@@ -200,6 +247,7 @@ class SearchWindow(Screen):
         super(SearchWindow, self).__init__(**kwargs)
         self.dropdown = CustomDropDown1(self)
         self.dropdown2 = CustomDropDown2(self)
+
 
     def open_drop_down(self, widget):
         self.dropdown.open(widget)
@@ -299,7 +347,7 @@ sm = WindowManager()
 
 screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
            SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"), PublishWindow(name="publish"),
-           MyPostsWindow(name="MyPostsWindow")]
+           MyPostsWindow(name="MyPostsWindow"), updateItemWindow(name="updateItemWindow")]
 
 
 for screen in screens:

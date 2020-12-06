@@ -119,6 +119,7 @@ class DataBase:
         self.cur.execute("SELECT * FROM dataTable WHERE UserName=?", (userName))
         self.conn.commit()
         posts = self.cur.fetchall()
+        self.conn.close()
         return posts
 
     def save(self):
@@ -138,3 +139,16 @@ class DataBase:
         if len(result) == 0:
             return "no results"
         return result
+
+    def update(self,userName, itemName, amount, location):
+        try:
+            self.conn = sqlite3.connect('database.db')
+            self.cur = self.conn.cursor()
+            self.cur.execute("UPDATE dataTable SET Amount =?, Location=? WHERE UserName=? AND ItemName=? ",
+                                 (amount, location, userName,itemName))
+            self.conn.commit()
+            self.conn.close()
+            return True
+        except:
+            return False
+
