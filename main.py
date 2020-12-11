@@ -164,7 +164,11 @@ class MyPostsWindow(Screen):
         else:
             index_x=0.1
             index_y=0.7
+            counter=1
             for i in posts:
+                if(counter>3):
+                    index_x= 0.6
+                    index_y=0.7
                 item =re.sub("[('),]", '', str(i[0]))
                 details = "amount: " + re.sub("[('),]", '', str(i[1])) + ", location: " + re.sub("[('),]", '', str(i[3])) +", "
                 t_or_f = re.sub("[('),]", '', str(i[5]))
@@ -179,12 +183,23 @@ class MyPostsWindow(Screen):
                                 pos_hint=({"x":index_x+0.05, "y": index_y-0.1}) )
                 self.add_widget(label)
                 index_y-=0.2
+                counter+=1
 
 
     def choose_item(self,instance):
         self.parent.update_args(instance)
-        self.parent.current="updateItemWindow"
-        print(instance.text)
+        self.clear_widgets();
+        label = Label(text="My Posts", size_hint=(0.8, 0.2),
+                      pos_hint=({"x":0.07, "top":1.05}),font_size=(self.parent.width**2 + self.parent.height**2) / 14**4)
+        self.add_widget(label)
+        label = Label(text="Please choose the Item that you want to update:", size_hint=(0.8, 0.2),
+                      pos_hint=({"x":-0.05, "top":0.95}), font_size=(self.parent.width**2 + self.parent.height**2) / 14**4)
+        self.add_widget(label)
+        self.button = Button(text="Back", on_press=self.back_main, size_hint=(0.2, 0.1),
+                             pos_hint=({"x":0.4, "y": 0.0}))
+        self.add_widget(self.button)
+        self.parent.current = "updateItemWindow"
+
 
     def back_main(self):
         self.parent.current = "main"
@@ -204,9 +219,7 @@ class updateItemWindow(Screen):
         super(updateItemWindow, self).__init__(**kwargs)
         self.dropdown2 = CustomDropDown2(self)
         self.dropdown3 = CustomDropDown3(self)
-        # self.item = self.parent.item.text
-        # print(self.parent.item.text)
-        # self.nameI.text = self.nameI + self.item
+
 
     def on_enter(self, *args):
         self.item = self.parent.item.text
