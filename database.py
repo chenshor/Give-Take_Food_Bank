@@ -117,9 +117,11 @@ class DataBase:
     def get_posts_by_user(self, userName):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
-        self.cur.execute("SELECT * FROM dataTable WHERE UserName=?", (userName))
-        self.conn.commit()
+        self.cur.execute('SELECT * FROM dataTable WHERE UserName=?', (userName,))
+        # self.conn.commit()
         posts = self.cur.fetchall()
+        # if(len(posts)==0):
+        #     return "no results"
         self.conn.close()
         return posts
 
