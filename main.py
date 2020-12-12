@@ -165,6 +165,9 @@ class MyPostsWindow(Screen):
             index_x=0.1
             index_y=0.7
             counter=1
+
+
+
             for i in posts:
                 if(counter>3):
                     index_x= 0.6
@@ -201,7 +204,7 @@ class MyPostsWindow(Screen):
         self.parent.current = "updateItemWindow"
 
 
-    def back_main(self):
+    def back_main(self,*args):
         self.parent.current = "main"
 
 class updateItemWindow(Screen):
