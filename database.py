@@ -97,18 +97,19 @@ class DataBase:
             return False
         return True
 
-    def update_taken (self, name, item_name,taken):
+    def update_taken (self,item_name,taken):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
-        self.cur.execute("UPDATE dataTable SET Taken =? WHERE UserName=? AND ItemName=? "
-                         "VALUES (?, ?, ?);",
-                         (taken,name,item_name))
+        name = str(item_name)
+        name=item_name.split(" ")
+        self.cur.execute("UPDATE dataTable SET Taken =? WHERE ItemName=?;", (taken,name[0]))
         self.conn.commit()
-        self.cur.execute("SELECT Taken FROM dataTable WHERE UserName=? AND ItemName=?", (name, item_name))
+        self.cur.execute("SELECT Taken FROM dataTable WHERE ItemName=?", (name[0],))
         result = self.cur.fetchall()
         self.conn.close()
-        if (result[0]==taken):
-            return  True
+        if len(result) > 0:
+            if (result[0]==taken):
+                return True
         else:
             return False
 
@@ -152,3 +153,22 @@ class DataBase:
         except:
             return False
 
+    def get_data_on_location(self):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("SELECT Location, COUNT(*) FROM dataTable GROUP BY Location")
+        result = self.cur.fetchall()
+
+        if len(result) == 0:
+            return "no results"
+        return result
+
+    def get_data_on_category(self):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("SELECT Category, COUNT(*) FROM dataTable GROUP BY Category")
+        result = self.cur.fetchall()
+
+        if len(result) == 0:
+            return "no results"
+        return result

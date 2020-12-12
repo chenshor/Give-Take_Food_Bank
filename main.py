@@ -1,3 +1,4 @@
+import kivy
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -15,6 +16,12 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty
 import database
 import re
+
+# from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+# from kivy.app import App
+# from kivy.uix.boxlayout import BoxLayout
+# import matplotlib.pyplot as plt
+
 
 
 
@@ -252,9 +259,10 @@ class SearchWindow(Screen):
     category = ObjectProperty(None)
     location = ObjectProperty(None)
     result = ObjectProperty(None)
+    item=""
+    list_products=[]
     button_text = StringProperty('Show possibilities')
     button_text2 = StringProperty('Show possibilities')
-    button_text3 = StringProperty('Show possibilities')
 
     def __init__(self, **kwargs):
         super(SearchWindow, self).__init__(**kwargs)
@@ -268,6 +276,10 @@ class SearchWindow(Screen):
     def open_drop_down2(self, widget):
         self.dropdown2.open(widget)
 
+    def Back(self):
+        self.category.text="Show possibilities"
+        self.location.text="Show possibilities"
+        self.result.clear_widgets()
 
     def Search(self):
         text = ""
@@ -278,10 +290,65 @@ class SearchWindow(Screen):
             if list == "no results":
                 self.result.text = list
             else:
-                for line in list:
-                    text = text + str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + " " + str(line[3]) + " " \
-                           + str(line[4]) + " " +  str(line[5]) + "\n"
-                self.result.text = text
+                self.list_products = list
+                self.pop_search_results(self.list_products)
+                # index_x = 0
+                # index_y = 0
+                # # for line in list:
+                # #     text = text + str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + " " + str(line[3]) + " " \
+                # #            + str(line[4]) + " " +  str(line[5]) + "\n"
+                # # self.result.text = text
+                #
+                #
+                # # label = Label(text="PRODUCT | AMOUNT | CATEGORY | LOCATION | PUBLISHER |   AVAILABLE", size_hint=(0.3, 0.1),
+                # #               pos_hint=({"x": index_x - 0.2, "y": index_y}))
+                # # self.add_widget(label)
+                # # index_y -= 0.1
+                #
+                # for i in list:
+                #     line=str(i[0])+"            "+str(i[1])+"            "+str(i[2])+"            "+str(i[3])+"            "+str(i[4])
+                #     self.item =re.sub("[('),]", '', line)
+                #     t_or_f = re.sub("[('),]", '            ', str(i[5]))
+                #     taken=""
+                #     if(t_or_f=="TRUE"):
+                #         taken="Taken"
+                #     else:
+                #         taken="Available"
+                #     label = Label(text=self.item,size_hint=(0.3,0.1),
+                #                     pos_hint=({"x":index_x-0.3, "y": index_y}) )
+                #     self.result.add_widget(label)
+                #     self.button = Button(text=taken, on_press=self.take_item,size_hint=(0.1,0.05),
+                #                     pos_hint=({"x":index_x+0.15, "y": index_y+0.03}))
+                #     self.result.add_widget(self.button)
+                #
+                #     # button = Button(text="Back", on_press=lambda x: self.back_main(), size_hint=(0.2, 0.1),
+                #     #                 pos_hint=({"x": 0.4, "y": 0.0}))
+                #     # self.add_widget(button)
+                #     index_y-=0.1
+
+    def pop_search_results(self, results):
+        layout = GridLayout(cols=1, padding=10)
+
+        for i in range(len(results)):
+            line=results[i]
+            text = str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + " " + str(line[3]) + " " + str(line[4]) + " " + str(line[5]) + "\n"
+            popupLabel = Label(text=text)
+            layout.add_widget(popupLabel)
+
+        closeButton = Button(text="Close the pop-up")
+        layout.add_widget(closeButton)
+        pop = Popup(title="RESULTS",
+                    content=layout,
+                    size_hint=(None, None), size=(400, 400))
+
+        pop.open()
+        closeButton.bind(on_press = pop.dismiss)
+    def take_item(self, instance):
+        if instance.text == "Available":
+            instance.text = "Taken"
+            database.update_taken(MainWindow.current, self.item, "TRUE")
+        else:
+            instance.text = "Available"
 
 
 
@@ -319,7 +386,15 @@ class AboutWindow(Screen):
     pass
 
 class DataWindow(Screen):
+    # plt.plot([1, 23, 2, 4])
+    # plt.ylabel('some numbers')
+    #
+    # def __init__(self):
+    #     box = BoxLayout()
+    #     box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    #     return box
     pass
+
 
 def invalidLogin():
     pop = Popup(title='Invalid Login',

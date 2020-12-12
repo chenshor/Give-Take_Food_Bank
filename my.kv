@@ -78,19 +78,27 @@
                 root.submit()
 
 <DataWindow>:
+    name: "DataPage"
     FloatLayout:
-
         Label:
             text:"Data Page"
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.9}
+            pos_hint: {"x":0.3, "top":1}
             size_hint: 0.35, 0.15
+
+        Button:
+            pos_hint:{"x":0.4, "y": 0.7}
+            size_hint:0.2,0.1
+            text: "show graphs"
+            on_release:
+                root.show_graphs()
 
         Button:
             pos_hint:{"x":0.4, "y": 0.0}
             size_hint:0.2,0.1
             text: "Back"
             on_release:
+                root.Back()
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 
@@ -170,6 +178,7 @@
             pos_hint: {"x": 0.3, "top":0.66}
             on_release: root.open_drop_down2(self)
 
+
         Label:
             id: result
             text:""
@@ -191,6 +200,7 @@
             text: "Back"
 
             on_release:
+                root.Back()
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 
