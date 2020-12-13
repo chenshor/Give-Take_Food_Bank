@@ -104,11 +104,36 @@
 
 <AboutWindow>:
     FloatLayout:
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+
+            Image:
+                source: "yiftah.jpg"
+                size_hint: None, None
+                pos_hint:{"center_x":0.1,"y":0.8}
+                size: 400, 400
 
         Label:
-            text:"About Page"
-            font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.9}
+            text:"Yiftah Szoke\n A fourth-year student in Software and Information\n Systems Engineering\n I like to play football in my free time"
+            font_size: (root.width**2 + root.height**2) / 16**4
+            pos_hint: {"x":0.1, "top":0.3}
+            size_hint: 0.35, 0.15
+
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'top'
+
+            Image:
+                source: "yiftah.jpg"
+                size_hint: None, None
+                pos_hint:{"center_x":0.1,"y":0.8}
+                size: 400, 400
+
+        Label:
+            text:"Chen Shoresh"
+            font_size: (root.width**2 + root.height**2) / 16**4
+            pos_hint: {"x":0.7, "top":0.3}
             size_hint: 0.35, 0.15
 
         Button:
@@ -390,6 +415,12 @@
 <MainWindow>:
     name1: name1
     email: email
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'recycle.png'
 
     FloatLayout:
         Label:

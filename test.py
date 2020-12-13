@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.filechooser import FileChooserIconView
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, StringProperty, ListProperty
 from kivy.properties import ObjectProperty, StringProperty, partial
