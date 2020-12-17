@@ -51,13 +51,14 @@ class DataBase:
     #         self.users[email] = (password, name, created)
     #
     #     self.file.close()
-
+    """This function returns the user if exists in the db, otherwise returns -1"""
     def get_user(self, user):
         if user==self.user[0][0]:
             return self.user[0]
         else:
             return -1
 
+    """ This function adds the user to the db"""
     def add_user(self, email, password, name):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -71,6 +72,7 @@ class DataBase:
         self.conn.close()
         return 1;
 
+    """ This function validates the user's information"""
     def validate(self, name, password):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -97,6 +99,7 @@ class DataBase:
             return False
         return True
 
+    """ This function updates an item from not taken to taken"""
     def update_taken (self,item_name,taken):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -113,7 +116,7 @@ class DataBase:
         else:
             return False
 
-
+    """ This function returns all the posts that were published by the given user"""
     def get_posts_by_user(self, userName):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -132,17 +135,29 @@ class DataBase:
                         + ";" + self.users[user][3] + ";" + self.users[user][4]
                         + "\n")
 
+    """ This function searches for all the items that match the information that was given"""
     def search(self, category, location):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
-        self.cur.execute("SELECT * FROM dataTable WHERE Category=? AND Location=?",
-                         (category, location))
+        # no category was picked so search only by location
+        if category=="Show possibilities":
+            self.cur.execute("SELECT * FROM dataTable WHERE Location=?",
+                             (location,))
+        # no location was picked so search only by category
+        elif location=="Show possibilities":
+            self.cur.execute("SELECT * FROM dataTable WHERE Category=?",
+                             (category,))
+        # both category and location was given by the user
+        else:
+            self.cur.execute("SELECT * FROM dataTable WHERE Category=? AND Location=?",
+                             (category, location))
         result = self.cur.fetchall()
 
         if len(result) == 0:
             return "no results"
         return result
 
+    """ This function updates the item's information"""
     def update(self,userName, itemName, amount, location):
         try:
             self.conn = sqlite3.connect('database.db')
