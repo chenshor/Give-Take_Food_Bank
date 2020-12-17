@@ -91,8 +91,7 @@ class MainWindow(Screen):
 
     def on_enter(self, *args):
         name, password, email = database.get_user(self.current)
-        self.name1.text = "Account Name: " + name
-        self.email.text = "Email: " + email
+        self.name1.text = "Hello " + name + "!"
 
 
 class WindowManager(ScreenManager):
@@ -172,13 +171,15 @@ class MyPostsWindow(Screen):
             index_x=0.1
             index_y=0.7
             counter=1
-
-
-
+            first=True
             for i in posts:
                 if(counter>3):
+                    counter+=1
                     index_x= 0.6
                     index_y=0.7
+                    if not first:
+                        index_y -= 0.2
+                    first=False
                 item =re.sub("[('),]", '', str(i[0]))
                 details = "amount: " + re.sub("[('),]", '', str(i[1])) + ", location: " + re.sub("[('),]", '', str(i[3])) +", "
                 t_or_f = re.sub("[('),]", '', str(i[5]))

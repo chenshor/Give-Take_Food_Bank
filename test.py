@@ -24,6 +24,11 @@ from kivy.uix.boxlayout import BoxLayout
 import matplotlib.pyplot as plt
 
 
+class StartWindow(Screen):
+    pass
+
+
+
 
 
 class CreateAccountWindow(Screen):
@@ -92,8 +97,7 @@ class MainWindow(Screen):
 
     def on_enter(self, *args):
         name, password, email = database.get_user(self.current)
-        self.name1.text = "Account Name: " + name
-        self.email.text = "Email: " + email
+        self.name1.text = "Hello: " + name + "!"
 
 
 class WindowManager(ScreenManager):
@@ -452,15 +456,17 @@ kv = Builder.load_file("my.kv")
 sm = WindowManager()
 # db = DataBase("users.txt")
 
-screens = [LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
-           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"), PublishWindow(name="publish"),
-           MyPostsWindow(name="MyPostsWindow"), updateItemWindow(name="updateItemWindow")]
+screens = [StartWindow(name="StartWindow"),LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
+           SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"),
+           PublishWindow(name="publish"),
+           MyPostsWindow(name="MyPostsWindow"), updateItemWindow(name="updateItemWindow")
+           ]
 
 
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "login"
+sm.current = "StartWindow"
 
 
 class MyMainApp(App):
@@ -473,41 +479,3 @@ if __name__ == "__main__":
     MyMainApp().run()
 
 
-""" Dynamic buttons - instead of posts do your function"""
-
-""""
-      posts = database.get_posts_by_user(MainWindow.current)
-        if len(posts) == 0:
-            pop_results("Message:", "You haven't posted anything yet")
-            button = Button(text="Back", on_press=lambda x: self.back_main(), size_hint=(0.2, 0.1),
-                            pos_hint=({"x":0.4, "y": 0.0}))
-            self.add_widget(button)
-        else:
-            index_x=0.5
-            index_y=0.5
-            for i in posts:
-                item =re.sub("[('),]", '', str(i[0]))
-                t_or_f = re.sub("[('),]", '', str(i[1]))
-                taken=""
-                if(t_or_f=="TRUE"):
-                    taken="Taken"
-                else:
-                    taken="Available"
-                label = Label(text=item,size_hint=(0.2,0.1),
-                                pos_hint=({"x":index_x-0.2, "y": index_y}) )
-                self.add_widget(label)
-                self.button = Button(text=taken, on_press=self.take_item,size_hint=(0.2,0.1),
-                                pos_hint=({"x":index_x, "y": index_y}))
-                self.add_widget(self.button)
-                button = Button(text="Back", on_press=lambda x: self.back_main(), size_hint=(0.2, 0.1),
-                                pos_hint=({"x": 0.4, "y": 0.0}))
-                self.add_widget(button)
-                index_y-=0.1"""
-
-"""
-    def take_item(self,instance):
-        if instance.text=="Available":
-            instance.text="Taken"
-            database.update_taken(MainWindow.current, self.text1, "TRUE")
-        else:
-            instance.text="Available"""

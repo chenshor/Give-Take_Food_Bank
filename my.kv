@@ -5,7 +5,11 @@
     email: email
     password: password
 
-
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/fruit.jpg'
 
     FloatLayout:
         cols:1
@@ -16,63 +20,71 @@
             Label:
                 text: "Create an Account"
                 size_hint: 0.8, 0.2
-                pos_hint: {"x":0.1, "top":1}
+                color: .2, .1, .73, 1
+                pos_hint: {"x":0.1, "y":0.85}
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             Label:
                 size_hint: 0.5,0.12
-                pos_hint: {"x":0, "top":0.8}
-                text: "Name: "
+                pos_hint: {"x":-0.1, "y":0.75}
+                text: "User Name: "
+                color: .2, .1, .73, 1
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
-                pos_hint: {"x":0.5, "top":0.8}
-                size_hint: 0.4, 0.12
+                pos_hint: {"x":0.4, "y":0.75}
+                size_hint: 0.55, 0.12
                 id: nameUser
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             Label:
                 size_hint: 0.5,0.12
-                pos_hint: {"x":0, "top":0.8-0.13}
+                pos_hint: {"x":-0.13, "y":0.58}
                 text: "Email: "
+                color: .2, .1, .73, 1
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
-                pos_hint: {"x":0.5, "top":0.8-0.13}
-                size_hint: 0.4, 0.12
+                pos_hint: {"x":0.4, "y":0.6}
+                size_hint: 0.55, 0.12
                 id: email
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             Label:
                 size_hint: 0.5,0.12
-                pos_hint: {"x":0, "top":0.8-0.13*2}
+                pos_hint: {"x":-0.1, "y":0.45}
                 text: "Password: "
+                color: .2, .1, .73, 1
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
-                pos_hint: {"x":0.5, "top":0.8-0.13*2}
-                size_hint: 0.4, 0.12
+                pos_hint: {"x":0.4, "y":0.45}
+                size_hint: 0.55, 0.12
                 id: password
                 multiline: False
                 password: True
                 font_size: (root.width**2 + root.height**2) / 14**4
 
         Button:
-            pos_hint:{"x":0.3,"y":0.25}
+            pos_hint:{"x":0.28,"y":0.07}
             size_hint: 0.4, 0.1
-            font_size: (root.width**2 + root.height**2) / 17**4
-            text: "Already have an Account? Log In"
+            font_size: (root.width**2 + root.height**2) / 16**4
+            text: "Already have an Account?\n    Log In"
+            color: .2, .1, .73, 1
+            background_color: 0, 0, 0, 0
             on_release:
                 root.manager.transition.direction = "left"
                 root.login()
 
         Button:
-            pos_hint:{"x":0.2,"y":0.05}
-            size_hint: 0.6, 0.15
+            pos_hint:{"x":0.25,"y":0.13}
+            size_hint: 0.5, 0.3
             text: "Submit"
             font_size: (root.width**2 + root.height**2) / 14**4
+            background_normal: "images/orange.png"
+            background_down: "images/orange.png"
             on_release:
                 root.manager.transition.direction = "left"
                 root.submit()
@@ -109,7 +121,7 @@
             anchor_y: 'top'
 
             Image:
-                source: "yiftah.jpg"
+                source: "images/yiftah.jpg"
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
@@ -125,7 +137,7 @@
             anchor_y: 'top'
 
             Image:
-                source: "yiftah.jpg"
+                source: "images/yiftah.jpg"
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
@@ -358,18 +370,61 @@
         valign: 'center'
         padding: (10,0)
         on_release: root.select(self.text)
+
+<StartWindow>
+    name: "StartWindow"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/c.jpg'
+
+    FloatLayout:
+
+        Button:
+            pos_hint:{"x":-0.1, "y": 0.25}
+            size_hint:0.35,0.3
+            text: "  Login"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
+            on_press:
+                background_color=0,0,0,0
+                app.root.current = "login"
+                root.manager.transition.direction = "right"
+
+
+        Button:
+            pos_hint:{"x":0.13, "y": 0.25}
+            size_hint:0.35,0.3
+            text: "  Register"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
+            on_press:
+                background_color=0,0,0,0
+                app.root.current = "create"
+                root.manager.transition.direction = "left"
+
+
 <LoginWindow>:
     name: "login"
 
     name1: name1
     password: password
 
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/fruit.jpg'
+
     FloatLayout:
 
         Label:
-            text:"name: "
+            text:"User Name: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.9}
+            pos_hint: {"x":0.0, "top":0.9}
             size_hint: 0.35, 0.15
 
         TextInput:
@@ -381,8 +436,9 @@
 
         Label:
             text:"Password: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.1, "top":0.7}
+            pos_hint: {"x":0.0, "top":0.7}
             size_hint: 0.35, 0.15
 
         TextInput:
@@ -393,20 +449,26 @@
             pos_hint: {"x": 0.45, "top":0.7}
             size_hint: 0.4, 0.15
 
+
         Button:
-            pos_hint:{"x":0.2,"y":0.05}
-            size_hint: 0.6, 0.2
+            pos_hint:{"x":0.15,"y":0.2}
+            size_hint: 0.6, 0.4
             font_size: (root.width**2 + root.height**2) / 13**4
-            text: "Login"
-            on_release:
+            text: " Login"
+            background_normal: "images/orange.png"
+            background_down: "images/orange.png"
+            on_press:
+                background_color=0,0,0,0
                 root.manager.transition.direction = "up"
                 root.loginBtn()
 
         Button:
-            pos_hint:{"x":0.3,"y":0.3}
+            pos_hint:{"x":0.27,"y":0.21}
             size_hint: 0.4, 0.1
-            font_size: (root.width**2 + root.height**2) / 17**4
-            text: "Don't have an Account? Create One"
+            color: .2, .1, .73, 1
+            font_size: (root.width**2 + root.height**2) / 16**4
+            text: "Don't have an Account?\n    Create One!"
+            background_color: 0, 0, 0, 0
             on_release:
                 root.manager.transition.direction = "right"
                 root.createBtn()
@@ -414,72 +476,83 @@
 
 <MainWindow>:
     name1: name1
-    email: email
 
     canvas.before:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'recycle.png'
+            source: 'images/donate.png'
 
     FloatLayout:
         Label:
             id: name1
             pos_hint:{"x": 0.1, "top":0.9}
             size_hint:0.8, 0.2
-            text: "Account Name: "
+            text: "Hello: "
+            color: 0,0,0,1
 
-        Label:
-            id: email
-            pos_hint:{"x": 0.1, "top":0.8}
-            size_hint:0.8, 0.2
-            text: "Email: "
 
         Button:
-            pos_hint:{"x":0.2, "y": 0.5}
-            size_hint:0.6,0.1
+            pos_hint:{"x":0.1, "y": 0.35}
+            size_hint:0.4,0.2
             text: "My Posts"
-            on_release:
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
+            on_press:
+                background_color=0,0,0,0
                 app.root.current = "MyPostsWindow"
                 root.manager.transition.direction = "down"
 
+
+
         Button:
-            pos_hint:{"x":0.2, "y": 0.4}
-            size_hint:0.6,0.1
+            pos_hint:{"x":0.25, "y": 0.35}
+            size_hint:0.5,0.2
             text: "Publish New Item"
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
             on_release:
                 app.root.current = "publish"
                 root.manager.transition.direction = "down"
         Button:
-            pos_hint:{"x":0.2, "y": 0.3}
-            size_hint:0.6,0.1
+            pos_hint:{"x":0.5, "y": 0.35}
+            size_hint:0.4,0.2
             text: "Search"
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
             on_release:
                 app.root.current = "SearchPage"
                 root.manager.transition.direction = "down"
 
         Button:
-            pos_hint:{"x":0.2, "y": 0.2}
-            size_hint:0.6,0.1
+            pos_hint:{"x":0.2, "y": 0.15}
+            size_hint:0.4,0.2
             text: "Data"
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
             on_release:
                 app.root.current = "DataPage"
                 root.manager.transition.direction = "down"
         Button:
-            pos_hint:{"x":0.2, "y": 0.1}
-            size_hint:0.6,0.1
-            text: "Log Out"
-            on_release:
-                app.root.current = "login"
-                root.manager.transition.direction = "down"
-
-        Button:
-            pos_hint:{"x":0.4, "y": 0.0}
-            size_hint:0.2,0.1
+            pos_hint:{"x":0.4, "y": 0.15}
+            size_hint:0.4,0.2
             text: "About Us"
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
             on_release:
                 app.root.current = "AboutPage"
                 root.manager.transition.direction = "down"
+        Button:
+            pos_hint:{"x":0.7, "y": 0.8}
+            size_hint:0.4,0.2
+            text: "Log Out"
+            background_normal: "images/cirrcleY.png"
+            background_down: "images/cirrcleY.png"
+            on_release:
+                app.root.current = "StartWindow"
+                root.manager.transition.direction = "down"
+
+
 
 <PublishWindow>:
     name: "publish"
