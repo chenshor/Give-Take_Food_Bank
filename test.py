@@ -307,7 +307,7 @@ class SearchWindow(Screen):
 
             line=results[i]
             if str(line[5]) == "FALSE":
-                text = str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + " " + str(line[3]) + " " + str(line[4]) + "\n"
+                text = str(line[0]) + " - Amount: " + str(line[1]) + " - Category: " + str(line[2]) + " - Location: " + str(line[3]) + " - User: " + str(line[4]) + "\n"
                 popupLabel = Label(text=text)
                 layout.add_widget(popupLabel)
                 self.curr_item=str(line[0])
@@ -317,7 +317,7 @@ class SearchWindow(Screen):
         layout.add_widget(closeButton)
         pop = Popup(title="RESULTS",
                     content=layout,
-                    size_hint=(None, None), size=(600, 600))
+                    size_hint=(None, None), size=(800, 600))
 
         pop.open()
         closeButton.bind(on_press = pop.dismiss)
@@ -357,7 +357,16 @@ class CustomDropDown3(DropDown):
         self.is2Displayed = False
 
     def on_select(self, data):
-        self.sm.button_text3 = data
+        self.sm.button_text4 = data
+
+class CustomDropDown4(DropDown):
+    def __init__(self, screen_manager, **kwargs):
+        super(CustomDropDown4, self).__init__(**kwargs)
+        self.sm = screen_manager
+        self.is2Displayed = False
+
+    def on_select(self, data):
+        self.sm.button_text4 = data
 
 
 class AboutWindow(Screen):
@@ -366,28 +375,58 @@ class AboutWindow(Screen):
 class DataWindow(Screen):
     data=[]
     isShow=False
+    button_text4 = StringProperty('Show possibilities')
+
     def __init__(self, **kwargs):
         super(DataWindow, self).__init__(**kwargs)
+        self.dropdown4 = CustomDropDown4(self)
+
+    def open_drop_down(self, widget):
+        self.dropdown4.open(widget)
 
     def show_graphs(self):
-        if self.isShow:
-            self.isShow = False
-            self.canvas.clear()
-            self.__init__()
-
+        if self.button_text4=='Show possibilities':
+            pop_results("invalid input", "invalid input, you must choose an option")
         else:
-            self.isShow = True
+            # if self.isShow:
+            #     self.isShow = False
+            #     self.canvas.clear()
+            #     self.__init__()
+            #
+            # else:
+            #     self.isShow = True
             x = []
             y = []
-            self.data=database.get_data_on_location()
-            for i in self.data:
-                x.append(i[0])
-                y.append(i[1])
-            self.data = database.get_data_on_category()
-            for i in self.data:
-                x.append(i[0])
-                y.append(i[1])
-            plt.bar(x, y)
+            self.data = []
+            plt.clf()
+            if self.button_text4=='Location':
+                self.data=database.get_data_on_location()
+                for i in self.data:
+                    x.append(i[0])
+                    y.append(i[1])
+                plt.bar(x, y)
+                plt.ylabel('Amounts')
+                plt.title('Amounts by location')
+
+            elif self.button_text4 == 'Category':
+                self.data = database.get_data_on_category()
+                for i in self.data:
+                    x.append(i[0])
+                    y.append(i[1])
+                plt.plot(x, y)
+                plt.ylabel('Amounts')
+                plt.title('Amounts by category')
+            else:
+                self.data = database.get_data_on_amounts()
+                for i in self.data:
+                    x.append(i[0])
+                    y.append(i[1])
+                fig = plt.figure()
+                ax = fig.add_axes([0, 0, 1, 1])
+                ax.axis('equal')
+                ax.set_title("Distribution of quantities")
+                ax.pie(y, labels=x, autopct='%1.2f%%')
+
             welcomePage = FloatLayout()
             box = BoxLayout(orientation='vertical', size_hint=(0.95, 0.5),
                             padding=8, pos_hint={'top': 0.7, 'center_x': 0.5})
@@ -415,6 +454,7 @@ class DataWindow(Screen):
 
     def Back(self):
         self.data=[]
+        self.button_text4 = 'Show possibilities'
         self.canvas.clear()
         self.__init__()
 

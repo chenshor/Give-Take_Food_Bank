@@ -174,3 +174,13 @@ class DataBase:
         if len(result) == 0:
             return "no results"
         return result
+
+    def get_data_on_amounts(self):
+        self.conn = sqlite3.connect('database.db')
+        self.cur = self.conn.cursor()
+        self.cur.execute("SELECT Amount, COUNT(*) FROM dataTable GROUP BY Amount")
+        result = self.cur.fetchall()
+
+        if len(result) == 0:
+            return "no results"
+        return result

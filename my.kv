@@ -99,7 +99,15 @@
             size_hint: 0.35, 0.15
 
         Button:
-            pos_hint:{"x":0.4, "y": 0.7}
+            id: options
+            text: root.button_text4
+            size: (200, 50)
+            size_hint: 0.5, 0.1
+            pos_hint: {"x": 0.15 , "top":0.85}
+            on_release: root.open_drop_down(self)
+
+        Button:
+            pos_hint:{"x":0.65, "y": 0.75}
             size_hint:0.2,0.1
             text: "show graphs"
             on_release:
@@ -121,7 +129,7 @@
             anchor_y: 'top'
 
             Image:
-                source: "images/yiftah.jpg"
+                source: "images/yiftah.png"
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
@@ -137,7 +145,7 @@
             anchor_y: 'top'
 
             Image:
-                source: "images/yiftah.jpg"
+                source: "images/yiftah.png"
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
@@ -404,6 +412,36 @@
                 background_color=0,0,0,0
                 app.root.current = "create"
                 root.manager.transition.direction = "left"
+
+
+
+<CustomDropDown4>:
+    padding: [0,0,0,0]
+    Button:
+        text:"Location"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+    Button:
+        text:"Category"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
+
+    Button:
+        text:"Amounts"
+        size:(200,50)
+        size_hint:(None,None)
+        text_size: self.size
+        valign: 'center'
+        padding: (10,0)
+        on_release: root.select(self.text)
 
 
 <LoginWindow>:
