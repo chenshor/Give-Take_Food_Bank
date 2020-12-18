@@ -102,8 +102,9 @@ class MainWindow(Screen):
 
     def on_enter(self, *args):
         name, password, email = database.get_user(self.current)
-        self.name1.text = "Hello: " + name + "!"
-
+        # self.name1.text = "Hello: " + name + "!"
+        self.name1.text = '[u][color=#288F10][b]Hello '+name+'! [/b][/color][color=#001C80][b]WELCOME TO [/b][/color][i][color=#8F1065]GIVE & TAKE[/i] APPLICATION[/color][/u]'
+        self.name1.background_color=(0, 0, 1,  1)
 
 class WindowManager(ScreenManager):
     def update_args(self,item):

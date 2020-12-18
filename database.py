@@ -154,7 +154,7 @@ class DataBase:
         result = self.cur.fetchall()
 
         if len(result) == 0:
-            return "no results"
+            return "No matching results!"
         return result
 
     """ This function updates the item's information"""
@@ -170,6 +170,7 @@ class DataBase:
         except:
             return False
 
+    """ This function return the locations with the amount of records for each location"""
     def get_data_on_location(self):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -180,6 +181,7 @@ class DataBase:
             return "no results"
         return result
 
+    """ This function return the categories with the amount of records for each category"""
     def get_data_on_category(self):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
@@ -190,6 +192,7 @@ class DataBase:
             return "no results"
         return result
 
+    """ This function return the amounts with the amount of records for each amount"""
     def get_data_on_amounts(self):
         self.conn = sqlite3.connect('database.db')
         self.cur = self.conn.cursor()
