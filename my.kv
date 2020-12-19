@@ -91,6 +91,13 @@
 
 <DataWindow>:
     name: "DataPage"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/four garbage.jpg'
+
     FloatLayout:
         Label:
             text:"Data Page"
@@ -175,6 +182,12 @@
     category: category
     location: location
     result: result
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/smile garbage.jpg'
 
     FloatLayout:
         cols:5
@@ -603,6 +616,12 @@
     amount: amount
     location: location
 
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/smell garbage.jpg'
+
     FloatLayout:
         cols:5
         size: root.width, root.height/2
@@ -692,6 +711,12 @@
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 <MyPostsWindow>:
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/savegarbage.jpg'
 
     FloatLayout:
         Label:
