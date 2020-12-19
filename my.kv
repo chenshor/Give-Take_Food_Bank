@@ -9,7 +9,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/fruit.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
         cols:1
@@ -68,7 +68,7 @@
                 font_size: (root.width**2 + root.height**2) / 14**4
 
         Button:
-            pos_hint:{"x":0.28,"y":0.07}
+            pos_hint:{"x":0.27,"y":0.15}
             size_hint: 0.4, 0.1
             font_size: (root.width**2 + root.height**2) / 16**4
             text: "Already have an Account?\n    Log In"
@@ -78,9 +78,10 @@
                 root.manager.transition.direction = "left"
                 root.login()
 
+
         Button:
-            pos_hint:{"x":0.25,"y":0.13}
-            size_hint: 0.5, 0.3
+            pos_hint:{"x":0.30,"y":0.23}
+            size_hint: 0.31, 0.2
             text: "Submit"
             font_size: (root.width**2 + root.height**2) / 14**4
             background_normal: "images/orange.png"
@@ -96,7 +97,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/four garbage.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
         Label:
@@ -104,6 +105,7 @@
             font_size: (root.width**2 + root.height**2) / 13**4
             pos_hint: {"x":0.3, "top":1}
             size_hint: 0.35, 0.15
+            color: .2, .1, .73, 1
 
         Button:
             id: options
@@ -122,14 +124,21 @@
 
         Button:
             pos_hint:{"x":0.4, "y": 0.0}
-            size_hint:0.2,0.1
+            size_hint:0.15,0.15
             text: "Back"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 root.Back()
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 
 <AboutWindow>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/back.jpg'
     FloatLayout:
         AnchorLayout:
             anchor_x: 'left'
@@ -140,33 +149,55 @@
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
+        Label:
+            text:"Yiftah Szoke"
+            color: .2, .1, .73, 1
+            font_size: (root.width**2 + root.height**2) / 14**4
+            pos_hint: {"x":-0.05, "y":0.23}
+            size_hint: 0.35, 0.15
+            bold: True
 
         Label:
-            text:"Yiftah Szoke\n A fourth-year student in Software and Information\n Systems Engineering\n I like to play football in my free time"
+            text:"A fourth-year student in Software and\n Information Systems Engineering.\n I like to play football in my free time."
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 16**4
-            pos_hint: {"x":0.1, "top":0.3}
+            pos_hint: {"x":0.03, "y":0.1}
             size_hint: 0.35, 0.15
+
+
+
 
         AnchorLayout:
             anchor_x: 'right'
             anchor_y: 'top'
 
             Image:
-                source: "images/yiftah.png"
+                source: "images/chen.png"
                 size_hint: None, None
                 pos_hint:{"center_x":0.1,"y":0.8}
                 size: 400, 400
 
         Label:
             text:"Chen Shoresh"
+            color: .2, .1, .73, 1
+            font_size: (root.width**2 + root.height**2) / 14**4
+            pos_hint: {"x":0.55, "y":0.23}
+            size_hint: 0.35, 0.15
+            bold: True
+
+        Label:
+            text:"A fourth-year student in Software and\n Information Systems Engineering."
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 16**4
-            pos_hint: {"x":0.7, "top":0.3}
+            pos_hint: {"x":0.62, "y":0.1}
             size_hint: 0.35, 0.15
 
         Button:
             pos_hint:{"x":0.4, "y": 0.0}
-            size_hint:0.2,0.1
+            size_hint:0.15,0.15
             text: "Back"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
@@ -187,7 +218,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/smile garbage.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
         cols:5
@@ -196,12 +227,14 @@
 
         Label:
             text: "Search Items"
+            color: .2, .1, .73, 1
             size_hint: 0.8, 0.2
             pos_hint: {"x":0.05, "top":1.05}
             font_size: (root.width**2 + root.height**2) / 14**4
 
         Label:
             text:"Category: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
             pos_hint: {"x":-0.125, "top":0.80}
             size_hint: 0.5,0.12
@@ -216,6 +249,7 @@
 
         Label:
             text:"Location: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
             pos_hint: {"x":-0.13, "top":0.7}
             size_hint: 0.5,0.12
@@ -404,8 +438,8 @@
     FloatLayout:
 
         Button:
-            pos_hint:{"x":-0.1, "y": 0.25}
-            size_hint:0.35,0.3
+            pos_hint:{"x":0.0, "y": 0.32}
+            size_hint:0.18,0.18
             text: "  Login"
             background_normal: "images/green.png"
             background_down: "images/green.png"
@@ -416,8 +450,8 @@
 
 
         Button:
-            pos_hint:{"x":0.13, "y": 0.25}
-            size_hint:0.35,0.3
+            pos_hint:{"x":0.19, "y": 0.32}
+            size_hint:0.18,0.18
             text: "  Register"
             background_normal: "images/green.png"
             background_down: "images/green.png"
@@ -467,29 +501,36 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/fruit.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
+
+        Label:
+            text:"Login "
+            color: .2, .1, .73, 1
+            font_size: (root.width**2 + root.height**2) / 12**4
+            pos_hint: {"x":0.31, "top":1}
+            size_hint: 0.35, 0.15
 
         Label:
             text:"User Name: "
             color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.0, "top":0.9}
+            pos_hint: {"x":0.0, "top":0.8}
             size_hint: 0.35, 0.15
 
         TextInput:
             id: name1
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
-            pos_hint: {"x": 0.45 , "top":0.9}
+            pos_hint: {"x": 0.45 , "top":0.8}
             size_hint: 0.4, 0.15
 
         Label:
             text:"Password: "
             color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 13**4
-            pos_hint: {"x":0.0, "top":0.7}
+            pos_hint: {"x":0.0, "top":0.6}
             size_hint: 0.35, 0.15
 
         TextInput:
@@ -497,13 +538,13 @@
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             password: True
-            pos_hint: {"x": 0.45, "top":0.7}
+            pos_hint: {"x": 0.45, "top":0.6}
             size_hint: 0.4, 0.15
 
 
         Button:
-            pos_hint:{"x":0.15,"y":0.2}
-            size_hint: 0.6, 0.4
+            pos_hint:{"x":0.28,"y":0.24}
+            size_hint: 0.35, 0.2
             font_size: (root.width**2 + root.height**2) / 13**4
             text: " Login"
             background_normal: "images/orange.png"
@@ -514,7 +555,7 @@
                 root.loginBtn()
 
         Button:
-            pos_hint:{"x":0.27,"y":0.21}
+            pos_hint:{"x":0.27,"y":0.13}
             size_hint: 0.4, 0.1
             color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 16**4
@@ -532,27 +573,26 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/donate.png'
+            source: 'images/donate2.png'
 
     FloatLayout:
         Label:
             id: name1
-            pos_hint:{"x": 0.1, "top":0.9}
+            pos_hint:{"x": 0.05, "top":0.55}
             size_hint:0.8, 0.2
             text: "Hello: "
-            color: 0,0,0,1
+            color: .105, .119, .208, 1
             bold: True
             font_size: 30
             markup: True
-            bcolor: 1, 1, 1, 1
 
 
         Button:
-            pos_hint:{"x":0.1, "y": 0.35}
-            size_hint:0.4,0.2
+            pos_hint:{"x":-0.01, "y": 0.0}
+            size_hint:0.2,0.15
             text: "My Posts"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_press:
                 background_color=0,0,0,0
                 app.root.current = "MyPostsWindow"
@@ -561,48 +601,48 @@
 
 
         Button:
-            pos_hint:{"x":0.25, "y": 0.35}
-            size_hint:0.5,0.2
+            pos_hint:{"x":0.39, "y": 0.0}
+            size_hint:0.23,0.15
             text: "Publish New Item"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "publish"
                 root.manager.transition.direction = "down"
         Button:
-            pos_hint:{"x":0.5, "y": 0.35}
-            size_hint:0.4,0.2
+            pos_hint:{"x":0.19, "y": 0.0}
+            size_hint:0.2,0.15
             text: "Search"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "SearchPage"
                 root.manager.transition.direction = "down"
 
         Button:
-            pos_hint:{"x":0.2, "y": 0.15}
-            size_hint:0.4,0.2
+            pos_hint:{"x":0.60, "y": 0.0}
+            size_hint:0.2,0.15
             text: "Data"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "DataPage"
                 root.manager.transition.direction = "down"
         Button:
-            pos_hint:{"x":0.4, "y": 0.15}
-            size_hint:0.4,0.2
+            pos_hint:{"x":0.80, "y": 0.0}
+            size_hint:0.2,0.15
             text: "About Us"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "AboutPage"
                 root.manager.transition.direction = "down"
         Button:
-            pos_hint:{"x":0.7, "y": 0.8}
-            size_hint:0.4,0.2
+            pos_hint:{"x":0.8, "y": 0.84}
+            size_hint:0.2,0.15
             text: "Log Out"
-            background_normal: "images/cirrcleY.png"
-            background_down: "images/cirrcleY.png"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "StartWindow"
                 root.manager.transition.direction = "down"
@@ -620,7 +660,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/smell garbage.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
         cols:5
@@ -628,27 +668,31 @@
 
         Label:
             text: "Publish A New Item"
+            color: .2, .1, .73, 1
             size_hint: 0.8, 0.2
             pos_hint: {"x":0.05, "top":1.05}
             font_size: (root.width**2 + root.height**2) / 14**4
 
         Label:
             text:"Item's Name: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.13, "top":0.90}
+            pos_hint: {"x":-0.1, "top":0.90}
             size_hint: 0.5,0.12
 
         TextInput:
-            pos_hint: {"x":0.3, "top":0.86}
-            size_hint: 0.5, 0.06
+            pos_hint: {"x":0.32, "top":0.86}
+            size_hint: 0.5, 0.08
+            font_size: 10
             id: itemName
             multiline: False
             font_size: (root.width**2 + root.height**2) / 14**4
 
         Label:
             text:"Category: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.125, "top":0.80}
+            pos_hint: {"x":-0.125, "top":0.76}
             size_hint: 0.5,0.12
 
         Button:
@@ -656,13 +700,14 @@
             text: root.button_text
             size: (200, 50)
             size_hint: 0.5, 0.06
-            pos_hint: {"x": 0.3 , "top":0.76}
+            pos_hint: {"x": 0.32 , "top":0.72}
             on_release: root.open_drop_down(self)
 
         Label:
             text:"Amount: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.13, "top":0.7}
+            pos_hint: {"x":-0.13, "top":0.64}
             size_hint: 0.5,0.12
 
         Button:
@@ -670,13 +715,14 @@
             text: root.button_text3
             size: (200, 50)
             size_hint: 0.5, 0.06
-            pos_hint: {"x": 0.3 , "top":0.66}
+            pos_hint: {"x": 0.32 , "top":0.60}
             on_release: root.open_drop_down3(self)
 
         Label:
             text:"Location: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.13, "top":0.6}
+            pos_hint: {"x":-0.13, "top":0.5}
             size_hint: 0.5,0.12
 
         TextInput:
@@ -684,7 +730,7 @@
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
             password: True
-            pos_hint: {"x": 0.3, "top":0.56}
+            pos_hint: {"x": 0.32, "top":0.47}
             size_hint: 0.5, 0.06
 
         Button:
@@ -692,21 +738,25 @@
             text: root.button_text2
             size: (200, 50)
             size_hint: 0.5, 0.06
-            pos_hint: {"x": 0.3, "top":0.56}
+            pos_hint: {"x": 0.32, "top":0.47}
             on_release: root.open_drop_down2(self)
 
         Button:
-            pos_hint:{"x":0.2,"y":0.1}
-            size_hint: 0.2,0.1
+            pos_hint:{"x":0.4,"y":0.2}
+            size_hint: 0.2,0.2
+            background_normal: "images/cir.png"
+            background_down: "images/cir.png"
             text: "Publish"
             on_release:
                 root.manager.transition.direction = "right"
                 root.publishItem()
 
         Button:
-            pos_hint:{"x":0.6, "y": 0.1}
-            size_hint:0.2,0.1
+            pos_hint:{"x":0.42, "y": 0.05}
+            size_hint:0.15,0.15
             text: "Back"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
@@ -716,26 +766,30 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/savegarbage.jpg'
+            source: 'images/back.jpg'
 
     FloatLayout:
         Label:
             text:"My Posts"
+            color: .2, .1, .73, 1
             size_hint: 0.8, 0.2
             pos_hint: {"x":0.07, "top":1.05}
             font_size: (root.width**2 + root.height**2) / 14**4
 
         Label:
             text:"Please choose the Item that you want to update:"
+            color: .2, .1, .73, 1
             size_hint: 0.8, 0.2
-            pos_hint: {"x":-0.05, "top":0.95}
+            pos_hint: {"x":0.1, "y":0.75}
             font_size: (root.width**2 + root.height**2) / 15**4
 
 
         Button:
             pos_hint:{"x":0.4, "y": 0.0}
-            size_hint:0.2,0.1
+            size_hint:0.15,0.15
             text: "Back"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
@@ -744,13 +798,19 @@
     amount: amount
     location: location
     nameI: nameI
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/back.jpg'
 
     FloatLayout:
         cols:5
         size: root.width, root.height/2
 
         Label:
-            text: "Publish A New Item"
+            text: "Update An Item"
+            color: .2, .1, .73, 1
             size_hint: 0.8, 0.2
             pos_hint: {"x":0.05, "top":1.05}
             font_size: (root.width**2 + root.height**2) / 14**4
@@ -758,15 +818,25 @@
         Label:
             id: nameI
             text:"Item's Name: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.13, "top":0.90}
+            pos_hint: {"x":-0.05, "top":0.90}
             size_hint: 0.5,0.12
 
         Label:
             text:"Amount: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
             pos_hint: {"x":-0.13, "top":0.7}
             size_hint: 0.5,0.12
+
+        TextInput:
+            id: location
+            font_size: (root.width**2 + root.height**2) / 13**4
+            multiline: False
+            password: True
+            pos_hint: {"x": 0.3, "top":0.66}
+            size_hint: 0.5, 0.06
 
         Button:
             id: amount
@@ -778,6 +848,7 @@
 
         Label:
             text:"Location: "
+            color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
             pos_hint: {"x":-0.13, "top":0.6}
             size_hint: 0.5,0.12
@@ -798,23 +869,32 @@
             on_release: root.open_drop_down2(self)
 
         Button:
-            pos_hint:{"x":0.2,"y":0.1}
-            size_hint: 0.2,0.1
+            pos_hint:{"x":0.4,"y":0.2}
+            size_hint: 0.2,0.2
             text: "Update"
+            background_normal: "images/cir.png"
+            background_down: "images/cir.png"
             on_release:
                 root.manager.transition.direction = "right"
                 root.updateItem()
 
         Button:
-            pos_hint:{"x":0.6, "y": 0.1}
-            size_hint:0.2,0.1
+            pos_hint:{"x":0.42, "y": 0.05}
+            size_hint:0.15,0.15
             text: "Back"
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 app.root.current = "main"
                 root.manager.transition.direction = "up"
 
 <show_results>
     name:"show_results"
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/back.jpg'
     FloatLayout:
         cols:5
         size: root.width, root.height/2

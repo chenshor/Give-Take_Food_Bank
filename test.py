@@ -103,7 +103,7 @@ class MainWindow(Screen):
     def on_enter(self, *args):
         name, password, email = database.get_user(self.current)
         # self.name1.text = "Hello: " + name + "!"
-        self.name1.text = '[u][color=#288F10][b]Hello '+name+'! [/b][/color][color=#001C80][b]WELCOME TO [/b][/color][i][color=#8F1065]GIVE & TAKE[/i] APPLICATION[/color][/u]'
+        self.name1.text = 'Welcome '+name+'!'
         self.name1.background_color=(0, 0, 1,  1)
 
 class WindowManager(ScreenManager):
@@ -187,14 +187,14 @@ class MyPostsWindow(Screen):
         else: # the user published items
             # initialize the positions of the items
             index_x=0.1
-            index_y=0.7
+            index_y=0.65
             counter=1
             first = True
             for i in posts:
                 if (counter > 3): # if true, we change the positions of the items
                     counter += 1
                     index_x = 0.6
-                    index_y = 0.7
+                    index_y = 0.65
                     if not first:
                         index_y -= 0.2
                     first = False
@@ -206,11 +206,13 @@ class MyPostsWindow(Screen):
                     details= details +"Taken"
                 else:
                     details= details+ "Available"
-                self.button = Button(text=item, on_press=self.choose_item,size_hint=(0.2,0.1),
+                self.button = Button(text=item, on_press=self.choose_item,size_hint=(0.15,0.15),
+                                     background_normal= "images/cir.png",
+                background_down= "images/cir.png",
                                 pos_hint=({"x":index_x, "y": index_y}))
                 self.add_widget(self.button)
-                label = Label(text=details,size_hint=(0.2,0.1),
-                                pos_hint=({"x":index_x+0.05, "y": index_y-0.1}) )
+                label = Label(text=details,size_hint=(0.2,0.1), color= (.2, .1, .73, 1),
+                                pos_hint=({"x":index_x+0.05, "y": index_y-0.05}) )
                 self.add_widget(label)
                 index_y-=0.2
                 counter+=1
@@ -220,19 +222,21 @@ class MyPostsWindow(Screen):
         self.parent.update_args(instance)
         self.clear_widgets();
         #build the page all over again
-        label = Label(text="My Posts", size_hint=(0.8, 0.2),
+        label = Label(text="My Posts", size_hint=(0.8, 0.2), color=(.2, .1, .73, 1),
                       pos_hint=({"x":0.07, "top":1.05}),font_size=(self.parent.width**2 + self.parent.height**2) / 14**4)
         self.add_widget(label)
-        label = Label(text="Please choose the Item that you want to update:", size_hint=(0.8, 0.2),
+        label = Label(text="Please choose the Item that you want to update:", size_hint=(0.8, 0.2),color=(.2, .1, .73, 1),
                       pos_hint=({"x":-0.05, "top":0.95}), font_size=(self.parent.width**2 + self.parent.height**2) / 14**4)
         self.add_widget(label)
-        self.button = Button(text="Back", on_press=self.back_main, size_hint=(0.2, 0.1),
+        self.button = Button(text="Back", on_press=self.back_main, size_hint=(0.15, 0.15),
+                             background_normal="images/green.png",
+        background_down= "images/green.png",
                              pos_hint=({"x":0.4, "y": 0.0}))
         self.add_widget(self.button)
         self.parent.current = "updateItemWindow"
 
     """ This function takes us back to the main page"""
-    def back_main(self):
+    def back_main(self,instance):
         self.parent.current = "main"
 
 """ In this class we update an existing item"""
@@ -271,6 +275,8 @@ class updateItemWindow(Screen):
             ok = database.update(MainWindow.current, self.item, self.amount.text, self.location.text)
             if ok:  # the item was added to the db successfully
                 pop_results("Message:", "The item updated successfully")
+                button_text3 = StringProperty('Show possibilities')
+                button_text2 = StringProperty('Show possibilities')
                 self.parent.current = "main"
             else: # something went wrong with the database
                 pop_results("Message: ", "OOPS! Please try again later.")
@@ -344,12 +350,12 @@ class show_results(Screen):
             category="None"
         elif location=="Show possibilities":
             location="None"
-        label1 = Label(text="Results:", size_hint=(0.2, 0.3),
+        label1 = Label(text="Results:", size_hint=(0.2, 0.3),color=(.2, .1, .73, 1),
                                               pos_hint=({"x": 0.4, "y": 0.8}),
                        font_size= (self.parent.width**2 + self.parent.height**2) / 14**4)
         self.add_widget(label1)
         text = "Category: " + category + ", Location: " + location
-        label2 = Label(text=text,size_hint=(0.2, 0.2),
+        label2 = Label(text=text,size_hint=(0.2, 0.2),color=(.2, .1, .73, 1),
                                               pos_hint=({"x": 0.2, "y": 0.77}))
         self.add_widget(label2)
         # initialize the positions of the items
@@ -359,7 +365,7 @@ class show_results(Screen):
             # displays each item
             text = str(item[0]) + " - Amount: " + str(item[1]) + " - Category: " + str(
                     item[2]) + " - Location: " + str(item[3]) + " - User: " + str(item[4]) + "\n"
-            result_label = Label(text=text, size_hint=(0.2, 0.1),
+            result_label = Label(text=text, size_hint=(0.2, 0.1),color=(.2, .1, .73, 1),
                                  pos_hint=({"x": index_x + 0.05, "y": index_y}))
             self.add_widget(result_label)
             self.curr_item = str(item[0])
@@ -447,7 +453,7 @@ class CustomDropDown3(DropDown):
         self.is2Displayed = False
 
     def on_select(self, data):
-        self.sm.button_text4 = data
+        self.sm.button_text3 = data
 
 class CustomDropDown4(DropDown):
     def __init__(self, screen_manager, **kwargs):
