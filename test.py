@@ -192,11 +192,11 @@ class MyPostsWindow(Screen):
             first = True
             for i in posts:
                 if (counter > 3): # if true, we change the positions of the items
-                    counter += 1
-                    index_x = 0.6
-                    index_y = 0.65
-                    if not first:
-                        index_y -= 0.2
+                    if first:
+                        index_x = 0.6
+                        index_y = 0.65
+                    # if not first:
+                    #     index_y -= 0.2
                     first = False
                 # parse the items from the query
                 item =re.sub("[('),]", '', str(i[0]))
