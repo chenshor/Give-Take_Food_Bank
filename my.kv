@@ -279,18 +279,21 @@
             size_hint: 0.5,0.12
 
         Button:
-            pos_hint:{"x":0.2,"y":0.1}
-            size_hint: 0.2,0.1
+            pos_hint:{"x":0.4,"y":0.2}
+            size_hint: 0.2,0.2
             text: "Search"
+            background_normal: "images/cir.png"
+            background_down: "images/cir.png"
             on_release:
                 root.manager.transition.direction = "up"
                 root.Search()
 
         Button:
-            pos_hint:{"x":0.6, "y": 0.1}
-            size_hint:0.2,0.1
+            pos_hint:{"x":0.42, "y": 0.05}
+            size_hint:0.15,0.15
             text: "Back"
-
+            background_normal: "images/green.png"
+            background_down: "images/green.png"
             on_release:
                 root.Back()
                 app.root.current = "main"

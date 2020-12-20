@@ -324,6 +324,9 @@ class SearchWindow(Screen):
             list = database.search(self.category.text, self.location.text)
             if list == "No matching results!":
                 self.result.text = list
+                pop_results("No Matching Results","No matching results!")
+                self.button_text = "Show possibilities"
+                self.button_text2 = "Show possibilities"
             else: # updating the data
                 self.parent.update_results(list)
                 self.parent.update_category(self.button_text)
@@ -372,17 +375,19 @@ class show_results(Screen):
             if str(item[5]) == "FALSE": # the item was not taken
                 popupButton = Button(text="Available", text_language=str(item[0]), on_press=self.take_item,
                                      size_hint=(0.2, 0.05),pos_hint=({"x": index_x + 0.55, "y": index_y+0.03}))
-                self.add_widget(popupButton)
+                self.add_widgetc(popupButton)
             else: # the item has been taken
                 popupButton = Button(text="Taken", text_language=str(item[0]), disabled=True,
                                      size_hint=(0.2, 0.05),pos_hint=({"x": index_x + 0.55, "y": index_y+0.03}))
                 self.add_widget(popupButton)
             index_y -= 0.1
-        back_btn = Button(text="Go back to search",on_press=self.back_search,
-                          pos_hint=({"x":0.2, "y": 0.0}) ,size_hint=(0.2, 0.1))
+        back_btn = Button(text="back to search",on_press=self.back_search,background_normal= "images/green.png",
+            background_down="images/green.png",
+                          pos_hint=({"x":0.2, "y": 0.0}) ,size_hint=(0.2, 0.15))
         self.add_widget(back_btn)
-        back_btn2 = Button(text="Menu",on_press=self.back_main,
-                           pos_hint=({"x": 0.6, "y": 0.0}),size_hint=(0.2, 0.1))
+        back_btn2 = Button(text="Menu",on_press=self.back_main,background_normal="images/green.png",
+            background_down="images/green.png",
+                           pos_hint=({"x": 0.6, "y": 0.0}),size_hint=(0.2, 0.15))
         self.add_widget(back_btn2)
 
     """This function takes us back to the main page"""
