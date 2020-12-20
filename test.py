@@ -375,7 +375,7 @@ class show_results(Screen):
             if str(item[5]) == "FALSE": # the item was not taken
                 popupButton = Button(text="Available", text_language=str(item[0]), on_press=self.take_item,
                                      size_hint=(0.2, 0.05),pos_hint=({"x": index_x + 0.55, "y": index_y+0.03}))
-                self.add_widgetc(popupButton)
+                self.add_widget(popupButton)
             else: # the item has been taken
                 popupButton = Button(text="Taken", text_language=str(item[0]), disabled=True,
                                      size_hint=(0.2, 0.05),pos_hint=({"x": index_x + 0.55, "y": index_y+0.03}))
