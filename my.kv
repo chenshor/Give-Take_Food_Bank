@@ -37,6 +37,8 @@
                 id: nameUser
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
+                background_color: 0,0,0,0.3
+
 
             Label:
                 size_hint: 0.5,0.12
@@ -51,6 +53,7 @@
                 id: email
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
+                background_color: 0,0,0,0.3
 
             Label:
                 size_hint: 0.5,0.12
@@ -66,6 +69,7 @@
                 multiline: False
                 password: True
                 font_size: (root.width**2 + root.height**2) / 14**4
+                background_color: 0,0,0,0.3
 
         Button:
             pos_hint:{"x":0.27,"y":0.15}
@@ -153,12 +157,12 @@
             text:"Yiftah Szoke"
             color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 14**4
-            pos_hint: {"x":-0.05, "y":0.23}
+            pos_hint: {"x":-0.03, "y":0.23}
             size_hint: 0.35, 0.15
             bold: True
 
         Label:
-            text:"A fourth-year student in Software and\n Information Systems Engineering.\n I like to play football in my free time."
+            text:"A fourth-year student in Software and\n Information Systems Engineering."
             color: .2, .1, .73, 1
             font_size: (root.width**2 + root.height**2) / 16**4
             pos_hint: {"x":0.03, "y":0.1}
@@ -261,6 +265,7 @@
             password: True
             pos_hint: {"x": 0.3, "top":0.66}
             size_hint: 0.5, 0.06
+
 
         Button:
             id: location
@@ -528,6 +533,8 @@
             multiline: False
             pos_hint: {"x": 0.45 , "top":0.8}
             size_hint: 0.4, 0.15
+            background_color: 0,0,0,0.3
+
 
         Label:
             text:"Password: "
@@ -543,6 +550,8 @@
             password: True
             pos_hint: {"x": 0.45, "top":0.6}
             size_hint: 0.4, 0.15
+            background_color: 0,0,0,0.3
+
 
 
         Button:
@@ -690,6 +699,7 @@
             id: itemName
             multiline: False
             font_size: (root.width**2 + root.height**2) / 14**4
+            background_color: 0,0,0,0.3
 
         Label:
             text:"Category: "
