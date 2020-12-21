@@ -15,7 +15,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ObjectProperty
-import database
+import backend
 import re
 
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
@@ -28,10 +28,8 @@ class StartWindow(Screen):
     pass
 
 
-
-
-""" In this class we create an account to new users"""
 class CreateAccountWindow(Screen):
+    """ In this class we create an account to new users"""
     nameUser = ObjectProperty(None)
     email = ObjectProperty(None)
     password = ObjectProperty(None)
@@ -63,8 +61,8 @@ class CreateAccountWindow(Screen):
         self.password.text = ""
         self.nameUser.text = ""
 
-""" In this class the user log in to our system"""
 class LoginWindow(Screen):
+    """ In this class the user log in to our system"""
     name1 = ObjectProperty(None)
     password = ObjectProperty(None)
 
@@ -90,8 +88,8 @@ class LoginWindow(Screen):
         self.password.text = ""
 
 
-""" This class represents the main page of our app where users can publish and search for items"""
 class MainWindow(Screen):
+    """ This class represents the main page of our app where users can publish and search for items"""
     name1 = ObjectProperty(None)
     email = ObjectProperty(None)
     current = ""
@@ -107,6 +105,7 @@ class MainWindow(Screen):
         self.name1.background_color=(0, 0, 1,  1)
 
 class WindowManager(ScreenManager):
+    """ This Class represents the screen manager"""
     def update_args(self,item):
         self.item=item
 
@@ -120,8 +119,9 @@ class WindowManager(ScreenManager):
         self.results=item
 
 
-""" This Class represents the publish page where users can publish new items"""
 class PublishWindow(Screen):
+    """ This Class represents the publish page where users can publish new items"""
+
     email = ObjectProperty(None)
     itemName = ObjectProperty(None)
     amount = ObjectProperty(None)
@@ -132,6 +132,7 @@ class PublishWindow(Screen):
     button_text = StringProperty('Show possibilities')
     button_text2 = StringProperty('Show possibilities')
     button_text3 = StringProperty('Show possibilities')
+
     def __init__(self, **kwargs):
         super(PublishWindow, self).__init__(**kwargs)
         self.dropdown = CustomDropDown1(self)
@@ -174,8 +175,8 @@ class PublishWindow(Screen):
             self.location.text = "Show possibilities"
             self.category.text = "Show possibilities"
 
-""" In this class we presents all the posts the user published"""
 class MyPostsWindow(Screen):
+    """ In this class we presents all the posts the user published"""
     btnRemove = ObjectProperty(None)
     currentItem = ObjectProperty(None)
 
@@ -239,8 +240,8 @@ class MyPostsWindow(Screen):
     def back_main(self,instance):
         self.parent.current = "main"
 
-""" In this class we update an existing item"""
 class updateItemWindow(Screen):
+    """ In this class we update an existing item"""
     amount = ObjectProperty(None)
     location = ObjectProperty(None)
     item = ObjectProperty(None)
@@ -249,6 +250,7 @@ class updateItemWindow(Screen):
     """ Initialize the dropDowns"""
     button_text3 = StringProperty('Show possibilities')
     button_text2 = StringProperty('Show possibilities')
+
     def __init__(self, **kwargs):
         super(updateItemWindow, self).__init__(**kwargs)
         self.dropdown2 = CustomDropDown2(self)
@@ -286,8 +288,8 @@ class updateItemWindow(Screen):
             self.amount.text=""
             self.location.text=""
 
-""" This class represents the search of an item by users"""
 class SearchWindow(Screen):
+    """ This class represents the search of an item by users"""
     category = ObjectProperty(None)
     location = ObjectProperty(None)
     result = ObjectProperty(None)
@@ -341,8 +343,8 @@ class SearchWindow(Screen):
         self.result.clear_widgets()
         self.parent.current = "show_results"
 
-"""This class represents the result page where all the items that matched the search will be shown"""
 class show_results(Screen):
+    """This class represents the result page where all the items that matched the search will be shown"""
 
     """This function displays the results of the search"""
     def on_enter(self, *args):
@@ -400,27 +402,6 @@ class show_results(Screen):
         self.clear_widgets()
         self.parent.current = "SearchPage"
 
-    # def pop_search_results(self, results):
-    #     layout = GridLayout(cols=2, padding=10)
-    #
-    #     for i in range(len(results)):
-    #
-    #         line=results[i]
-    #         if str(line[5]) == "FALSE":
-    #             text = str(line[0]) + " - Amount: " + str(line[1]) + " - Category: " + str(line[2]) + " - Location: " + str(line[3]) + " - User: " + str(line[4]) + "\n"
-    #             popupLabel = Label(text=text)
-    #             layout.add_widget(popupLabel)
-    #             self.curr_item=str(line[0])
-    #             popupButton = Button(text="Available",text_language=str(line[0]), on_press=self.take_item, size_hint=(0.2, 0.05))
-    #             layout.add_widget(popupButton)
-    #     closeButton = Button(text="Close the pop-up",size_hint=(0.1, 0.1))
-    #     layout.add_widget(closeButton)
-    #     pop = Popup(title="RESULTS",
-    #                 content=layout,
-    #                 size_hint=(None, None), size=(800, 600))
-    #
-    #     pop.open()
-    #     closeButton.bind(on_press = pop.dismiss)
     """ This function update the specific item to "taken"""""
     def take_item(self, instance):
         if instance.text == "Available":
@@ -471,9 +452,11 @@ class CustomDropDown4(DropDown):
 
 
 class AboutWindow(Screen):
+    """ This class represents the about us window"""
     pass
 
 class DataWindow(Screen):
+    """ This class represents the data window"""
     data=[]
     isShow=False
     button_text4 = StringProperty('Show possibilities')
@@ -489,13 +472,6 @@ class DataWindow(Screen):
         if self.button_text4=='Show possibilities':
             pop_results("invalid input", "invalid input, you must choose an option")
         else:
-            # if self.isShow:
-            #     self.isShow = False
-            #     self.canvas.clear()
-            #     self.__init__()
-            #
-            # else:
-            #     self.isShow = True
             x = []
             y = []
             self.data = []
@@ -537,39 +513,23 @@ class DataWindow(Screen):
             welcomePage.add_widget(box)
             self.add_widget(welcomePage)
 
-            # x = []
-            # y = []
-            # self.data = database.get_data_on_category()
-            # for i in self.data:
-            #     x.append(i[0])
-            #     y.append(i[1])
-            # plt.bar(x, y)
-            # welcomePage = FloatLayout()
-            # box = BoxLayout(orientation='vertical', size_hint=(0.5, 0.5),
-            #                 padding=8, pos_hint={'top': 0.7, 'center_x': 0.7})
-            #
-            # box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-            #
-            # welcomePage.add_widget(box)
-            # self.add_widget(welcomePage)
-
     def Back(self):
         self.data=[]
         self.button_text4 = 'Show possibilities'
         self.canvas.clear()
         self.__init__()
 
-
 def invalidLogin():
+    """ This function shows popups of invalid login"""
     pop = Popup(title='Invalid Login',
                 content=Label(text='Invalid username or password.'),
                 size_hint=(None, None), size=(400, 400))
 
     pop.open()
-    """ This function shows popups according to a message"""
 
 
 def pop_results(title, results):
+    """ This function shows popups according to a message"""
     layout = GridLayout(cols=1, padding=10)
     popupLabel = Label(text=results)
     layout.add_widget(popupLabel)
@@ -582,20 +542,17 @@ def pop_results(title, results):
     pop.open()
     closeButton.bind(on_press=pop.dismiss)
 
-
 def invalidForm():
+    """ This function shows popups of invalid form"""
     pop = Popup(title='Invalid Form',
                 content=Label(text='Please fill in all inputs with valid information.'),
                 size_hint=(None, None), size=(400, 400))
 
     pop.open()
 
-
-
 kv = Builder.load_file("my.kv")
 
 sm = WindowManager()
-# db = DataBase("users.txt")
 
 screens = [StartWindow(name="StartWindow"),LoginWindow(name="login"), CreateAccountWindow(name="create"), MainWindow(name="main"),
            SearchWindow(name="SearchPage"), AboutWindow(name="AboutPage"), DataWindow(name="DataPage"),
@@ -603,20 +560,19 @@ screens = [StartWindow(name="StartWindow"),LoginWindow(name="login"), CreateAcco
            MyPostsWindow(name="MyPostsWindow"), updateItemWindow(name="updateItemWindow")
            ]
 
-
 for screen in screens:
     sm.add_widget(screen)
 
 sm.current = "StartWindow"
 
-
-class MyMainApp(App):
+class FoodBankApp(App):
+    """ This class represents the main app"""
     def build(self):
         return sm
 
 
 if __name__ == "__main__":
-    database = database.DataBase()
-    MyMainApp().run()
+    database = backend.DataBase()
+    FoodBankApp().run()
 
 

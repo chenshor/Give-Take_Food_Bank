@@ -1,6 +1,5 @@
 <CreateAccountWindow>:
     name: "create"
-
     nameUser: nameUser
     email: email
     password: password
@@ -38,7 +37,6 @@
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
                 background_color: 0,0,0,0.3
-
 
             Label:
                 size_hint: 0.5,0.12
@@ -81,7 +79,6 @@
             on_release:
                 root.manager.transition.direction = "left"
                 root.login()
-
 
         Button:
             pos_hint:{"x":0.30,"y":0.23}
@@ -167,9 +164,6 @@
             font_size: (root.width**2 + root.height**2) / 16**4
             pos_hint: {"x":0.03, "y":0.1}
             size_hint: 0.35, 0.15
-
-
-
 
         AnchorLayout:
             anchor_x: 'right'
@@ -469,7 +463,6 @@
                 root.manager.transition.direction = "left"
 
 
-
 <CustomDropDown4>:
     padding: [0,0,0,0]
     Button:
@@ -497,7 +490,6 @@
         valign: 'center'
         padding: (10,0)
         on_release: root.select(self.text)
-
 
 <LoginWindow>:
     name: "login"
